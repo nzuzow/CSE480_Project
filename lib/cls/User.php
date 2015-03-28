@@ -13,7 +13,7 @@ class User {
      */
     public function __construct($row) {
         //$this->id = $row['id'];
-        $this->userid = $row['userid'];
+        $this->userid = $row['userID'];
         $this->name = $row['name'];
         $this->email = $row['email'];
         $this->city = $row['city'];

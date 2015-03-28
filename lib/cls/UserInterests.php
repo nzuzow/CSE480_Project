@@ -29,6 +29,9 @@ SQL;
         $interests_arr = explode(",",$interests);
 
         foreach($interests_arr as $item) {
+            // remove extra whitespace
+            $item = trim($item);
+
             $statement = $this->pdo()->prepare($sql);
             $statement->execute(array($userid, $item));
         }

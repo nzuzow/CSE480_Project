@@ -212,8 +212,9 @@ SQL;
             return "Email address already exists.";
         }
 
+        $birthyear = intval($birthyear);
         // Check to make sure the year of birth is a 4 digit integer
-        if(!is_int($birthyear) || strlen($birthyear) != 4) {
+        if(!is_int($birthyear) || strlen((string)$birthyear) != 4) {
             return "Birthyear is not a 4 digit integer";
         }
 
