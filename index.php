@@ -1,6 +1,6 @@
 <?php
-// This will be the initial page of the project. This is where a user will 
-// have to login and whatnot.
+require "lib/site.inc.php";
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -9,6 +9,7 @@
 	<title>CSE 480 Project</title>
 </head>
 <body>
-	<p>Hello World!</p>
+<?php echo Format::header($name); ?>
+<?php echo Format::footer(); ?>
 </body>
 </html>
