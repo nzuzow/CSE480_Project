@@ -99,7 +99,7 @@ class User {
     public function getEmail() {
         return $this->email;
     }
-    
+
     private $userid;    ///< User-supplied ID
     private $name;      ///< What we call you by
     private $email;     ///< Email address
@@ -107,6 +107,5 @@ class User {
     private $state;
     private $privacy;
     private $birthyear;
-
 
 }

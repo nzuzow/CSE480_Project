@@ -211,6 +211,16 @@ SQL;
             return "Email address already exists.";
         }
 
+        // Check to make sure the year of birth is a 4 digit integer
+        if(!is_int($birthyear) || strlen($birthyear) != 4) {
+            return "Birthyear is not a 4 digit integer";
+        }
+
+        // Make sure the email contains an @ sign
+        if(strpos($email, "@") === false) {
+            return "The email is not valid";
+        }
+
         // Create salt and encrypted password
         //$salt = self::random_salt();
         //$hash = hash("sha256", $password1 . $salt);
