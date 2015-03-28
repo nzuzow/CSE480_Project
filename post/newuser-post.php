@@ -4,7 +4,7 @@ require_once "../lib/site.inc.php";
 
 unset($_SESSION['newuser-error']);
 
-$nu = new NewUsers($site);
+$nu = new Users($site);
 $msg = $nu->newUser(
     strip_tags($_POST['userid']),
     strip_tags($_POST['name']),
