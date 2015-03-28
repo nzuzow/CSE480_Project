@@ -37,8 +37,20 @@ require_once "lib/site.inc.php";
             <input type="password" id="password2" name="password2">
         </p>
         <p>
-            <label for="secret">Secret:</label><br>
-            <input type="password" id="secret" name="secret">
+            <label for="city">City:</label><br>
+            <input type="text" id="city" name="city">
+        </p>
+        <p>
+            <label for="state">State:</label><br>
+            <input type="text" id="state" name="state">
+        </p>
+        <p>
+            <label for="privacy">Privacy:</label><br>
+            <input type="text" id="privacy" name="privacy">
+        </p>
+        <p>
+            <label for="birthyear">Birth Year:</label><br>
+            <input type="text" id="birthyear" name="birthyear">
         </p>
         <p><input type="submit"></p>
         <?php
