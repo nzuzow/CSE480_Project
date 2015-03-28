@@ -178,4 +178,52 @@ SQL;
 
     }
 
+    /**
+     * Create a new user.
+     * @param $userid New user ID
+     * @param $name New user name
+     * @param $email User email address
+     * @param $password1 The new password
+     * @param $password2 The new password second copy
+     * @param $city
+     * @param $state
+     * @param $privacy
+     * @param $birthyear
+     * @returns Error message or null if no error
+     */
+    public function newUser($userid, $name, $email, $password1, $password2, $city, $state, $privacy, $birthyear) {
+        // Ensure the passwords are valid and equal
+        if(strlen($password1) < 8) {
+            return "Passwords must be at least 8 characters long";
+        }
+
+        if($password1 !== $password2) {
+            return "Passwords are not equal";
+        }
+
+        // Ensure we have no duplicate user ID or email address
+        $users = new Users($this->site);
+        if($users->exists($userid)) {
+            return "User ID already exists. Please choose another one.";
+        }
+
+        if($users->exists($email)) {
+            return "Email address already exists.";
+        }
+
+        // Create salt and encrypted password
+        //$salt = self::random_salt();
+        //$hash = hash("sha256", $password1 . $salt);
+
+        // Add a record to the newuser table
+        $sql = <<<SQL
+REPLACE INTO $this->tableName(userID, pass, email, name, city, state, privacy, birthyear)
+values(?, ?, ?, ?, ?, ?, ?, ?)
+SQL;
+
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($userid, $password1, $email, $name, $city, $state, $privacy, $birthyear));
+
+    }
+
 }
