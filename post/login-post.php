@@ -2,6 +2,8 @@
 $login = true;
 require '../lib/site.inc.php';
 
+unset($_SESSION['login-error']);
+
 if(isset($_POST['user']) && isset($_POST['password'])) {
     $users = new Users($site);
 
@@ -12,4 +14,6 @@ if(isset($_POST['user']) && isset($_POST['password'])) {
         exit;
     }
 }
+$_SESSION['login-error'] = "Invalid username and/or password.";
 header("location: ../login.php");
+exit;

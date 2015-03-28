@@ -40,7 +40,6 @@ SQL;
 
         $row = $statement->fetch(PDO::FETCH_ASSOC);
 
-        // Get the encrypted password and salt from the record
         //$hash = $row['password'];
         //$salt = $row['salt'];
         $db_pass = $row['pass'];

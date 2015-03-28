@@ -1,3 +1,7 @@
+<?php
+$login = false;
+require_once "lib/site.inc.php";
+?>
 <!DOCTYPE html>
 <html>
 <head lang="en">
