@@ -14,7 +14,9 @@ $msg = $nu->newUser(
     strip_tags($_POST['city']),
     strip_tags($_POST['state']),
     strip_tags($_POST['privacy']),
-    strip_tags($_POST['birthyear']));
+    strip_tags($_POST['birthyear']),
+    strip_tags($_POST['interests']),
+    $site);
 
 if($msg !== null) {
     $_SESSION['newuser-error'] = $msg;

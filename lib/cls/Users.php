@@ -178,6 +178,7 @@ SQL;
 
     }
 
+
     /**
      * Create a new user.
      * @param $userid New user ID
@@ -191,7 +192,7 @@ SQL;
      * @param $birthyear
      * @returns Error message or null if no error
      */
-    public function newUser($userid, $name, $email, $password1, $password2, $city, $state, $privacy, $birthyear) {
+    public function newUser($userid, $name, $email, $password1, $password2, $city, $state, $privacy, $birthyear, $interests, $site) {
         // Ensure the passwords are valid and equal
         if(strlen($password1) < 8) {
             return "Passwords must be at least 8 characters long";
@@ -234,6 +235,9 @@ SQL;
         $statement = $this->pdo()->prepare($sql);
         $statement->execute(array($userid, $password1, $email, $name, $city, $state, $privacy, $birthyear));
 
+        // Parse the interests and add them to the table.
+        $user_interests = new UserInterests($site);
+        $user_interests->addInterests($userid, $interests);
     }
 
 }
