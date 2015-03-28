@@ -193,6 +193,13 @@ footer p {
     padding-top: 10em;
 }
 
+#interests {
+    width: 25em;
+    height: 5em;
+    max-height: 5em;
+    max-width: 25em;
+}
+
 /* Additional Styles */
 /* Login Page */
 .login-options {

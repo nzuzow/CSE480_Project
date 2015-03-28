@@ -52,6 +52,10 @@ require_once "lib/site.inc.php";
             <label for="birthyear">Birth Year:</label><br>
             <input type="text" id="birthyear" name="birthyear">
         </p>
+        <p>
+            <label for="interests">Interests (comma seperated):</label><br>
+            <textarea id="interests" name="interests" placeholder="Ex: Watch basketball, play video games, create databases."></textarea>
+        </p>
         <p><input type="submit"></p>
         <?php
         if(isset($_SESSION['newuser-error'])) {
