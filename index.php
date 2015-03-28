@@ -1,15 +1,22 @@
 <?php
 require "lib/site.inc.php";
-
+$view = new UserView($site, $user, $_REQUEST);
+$name = $view->getName();
 ?>
 <!DOCTYPE html>
 <html>
-<head lang="en">
-	<meta charset="UTF-8">
-	<title>CSE 480 Project</title>
+<head>
+	<title><?php echo $name; ?></title>
+	<link href="css/main.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+<header><h1>Homepage</h1></header>
 <?php echo Format::header($name); ?>
+<div class = "main">
+	<div class="left">
+	<?php echo $view->presentProfile(); ?>
+	</div>
+</div>
 <?php echo Format::footer(); ?>
 </body>
 </html>

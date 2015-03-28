@@ -22,6 +22,7 @@ class Format {
 <nav>
 	<ul>
 		<li><a href="./">Home</a></li>
+		<li><a href="profile.php">My Profile</a></li>
 		<li><a href="post/logout-post.php">Log out</a></li>
 	<li><form>
 		<input type="search"> <input type="submit" value="Search">

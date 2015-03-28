@@ -22,6 +22,12 @@
     <p class="login-options">-OR-</p>
     <p class="login-options"><a href="lostpw.php">Lost Password</a></p>
     <p class="login-options"><a href="newuser.php">New User</a></p>
+    <?php
+    if(isset($_SESSION['login-error'])) {
+        echo "<p>" . $_SESSION['login-error'] . "</p>";
+        unset($_SESSION['login-error']);
+    }
+    ?>
 </form>
 </div>
 </body>
