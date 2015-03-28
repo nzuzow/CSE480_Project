@@ -1,0 +1,50 @@
+CREATE TABLE `480_User` (userID VARCHAR(50) NOT NULL, pass VARCHAR(35) NOT NULL, email VARCHAR(100) NOT NULL, name VARCHAR(100) NOT NULL, city VARCHAR(50), state VARCHAR(50), privacy VARCHAR(30), birthyear DATETIME,
+  PRIMARY KEY(userID)
+) ENGINE=InnoDB;
+
+CREATE TABLE `480_Friendship` (senderID VARCHAR(50) NOT NULL, recipientID VARCHAR(50) NOT NULL, pending TINYINT,
+  PRIMARY KEY(senderID, recipientID),
+  FOREIGN KEY (senderID) REFERENCES 480_User(userID)
+    ON DELETE CASCADE,
+  FOREIGN KEY (recipientID) REFERENCES 480_User(userID)
+    ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `480_User_Interests` (userID VARCHAR(50) NOT NULL, interest VARCHAR(75) NOT NULL,
+  PRIMARY KEY(userID, interest),
+  FOREIGN KEY(userID) REFERENCES 480_User(userID)
+    ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `480_Project` (projID INT AUTO_INCREMENT, ownerID VARCHAR(50) NOT NULL, title VARCHAR(100),
+  PRIMARY KEY(projID, ownerID),
+  FOREIGN KEY(ownerID) REFERENCES 480_User(userID)
+    ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `480_Invitation` (projID INT, ownerID VARCHAR(50) NOT NULL, collaboratorID VARCHAR(50), status VARCHAR(40),
+  PRIMARY KEY(projID, ownerID, collaboratorID),
+  FOREIGN KEY(projID, ownerID) REFERENCES 480_Project(projID, ownerID)
+    ON DELETE CASCADE,
+  FOREIGN KEY(collaboratorID) REFERENCES 480_User(userID)
+    ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `480_Document` (docID INT AUTO_INCREMENT, projID INT, projOwnerID VARCHAR(50) NOT NULL, creatorID VARCHAR(50), fileName VARCHAR(100), versionNo INT, createTime DATETIME, parentDocID INT,
+  PRIMARY KEY(docID),
+  UNIQUE(projID, projOwnerID, creatorID, fileName, versionNo),
+  FOREIGN KEY(parentDocID) REFERENCES 480_Document(docID)
+    ON DELETE CASCADE,
+  FOREIGN KEY(projID, projOwnerID) REFERENCES 480_Project(projID, ownerID)
+    ON DELETE CASCADE,
+  FOREIGN KEY(creatorID) REFERENCES 480_User(userID)
+    ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `480_Comment` (commenterID VARCHAR(50), docID INT, timeStamp DATETIME, message TEXT,
+  PRIMARY KEY(commenterID, docID, timeStamp),
+  FOREIGN KEY(commenterID) REFERENCES 480_User(userID)
+    ON DELETE CASCADE,
+  FOREIGN KEY(docID) REFERENCES 480_Document(docID)
+    ON DELETE CASCADE
+) ENGINE=InnoDB;
