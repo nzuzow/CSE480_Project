@@ -18,7 +18,7 @@ class Friendship extends Table
     }
     public function checkFriend($curruser, $user){
         $sql=<<<SQL
-SELECT * FROM $this->tablename
+SELECT * FROM $this->tableName
 WHERE ((senderID = ? and recipientID = ?) or
 (recipientID = ? and senderID = ?)) and pending = ?
 SQL;
