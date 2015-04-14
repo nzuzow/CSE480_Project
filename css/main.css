@@ -325,11 +325,25 @@ div#update {
 }
 .user-list {
     font-family: "Arial", Arial, sans-serif;
-    width: 96%;
+    width: 45%;
     padding: 0.5em;
     background: white;
     margin: 0.5em auto 0.5em auto;
     border-radius: 0.3em;
     border: 1pt solid black;
+    display: inline-block;
+    vertical-align: top;
 }
 
+/*Friends list*/
+#friend_list {
+    font-family: "Arial", Arial, sans-serif;
+    width: 45%;
+    padding: 0.5em;
+    background: white;
+    margin: 0.5em auto 0.5em auto;
+    border-radius: 0.3em;
+    border: 1pt solid black;
+    display: inline-block;
+    vertical-align: top;
+}

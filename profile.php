@@ -1,9 +1,12 @@
 <?php
 require "lib/site.inc.php";
+
+// This if is never getting called because 'r' is not defined
 if(isset($_GET['r'])) {
     $users = new Users($site);
     $user = $users->getUser($user->getUserID());
 }
+
 $view = new UserView($site, $user, $_REQUEST);
 $name = $view->getName();
 

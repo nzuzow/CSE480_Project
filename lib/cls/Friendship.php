@@ -25,7 +25,7 @@ SQL;
         $pdo = $this->pdo();
         $statement = $pdo->prepare($sql);
 
-        $statement->execute(array($curruser,$user, $user, $curruser, NULL));
+        $statement->execute(array($curruser,$user, $curruser, $user, '0'));
         if($statement->rowCount() === 0) {
             return false;
         }
@@ -36,14 +36,51 @@ SQL;
     }
     public function requestFriend($curruser, $user){
         $sql=<<<SQL
-        INSERT INTO $this->tableName(senderID, recipientID)
-        VALUES (?,?)
+        INSERT INTO $this->tableName(senderID, recipientID, pending)
+        VALUES (?,?,?)
 SQL;
         $pdo = $this->pdo();
         $statement = $pdo->prepare($sql);
-        $statement->execute(array($curruser, $user));
+        $statement->execute(array($curruser, $user, '1'));
 
         return true;
 
+    }
+
+    /**
+     * This takes a userID and returns an array of
+     * that users friends.
+     * @param $userid UserID who you want the friend list for
+     */
+    public function getFriend($userid) {
+        $sql=<<<SQL
+SELECT * FROM $this->tableName
+WHERE (senderID = ? OR recipientID = ?) AND pending = ?
+SQL;
+
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array($userid, $userid, '0'));
+
+        if($statement->rowCount() === 0) {
+            return null;
+        }
+
+        $result = array();  // Empty initial array
+        foreach($statement as $row) {
+            // Need to check if the userid that was passed in is the sender or
+            // the recipient. Then we can add the other value to the result array
+            if($row['senderID'] == $userid && !in_array($row['recipientID'], $result))
+            {
+                $result[] = $row['recipientID'];
+            }
+            else if($row['recipientID'] == $userid && !in_array($row['senderID'], $result))
+            {
+                $result[] = $row['senderID'];
+            }
+            //$result[] = $row;
+        }
+
+        return $result;
     }
 }

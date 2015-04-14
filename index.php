@@ -18,6 +18,7 @@ $name = $view->getName();
 	</div>
 	<div class="right">
 			<?php echo $view->presentUsers(); ?>
+			<?php echo $view->presentFriends();?>
 	</div>
 </div>
 <?php echo Format::footer(); ?>

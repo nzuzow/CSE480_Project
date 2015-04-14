@@ -109,12 +109,17 @@ HTML;
 
     public function getAdd()
     {
-        if (isset($request['i']) && $this->users->getUser($request['i']) !== null) {
+        $curruser = "";
+
+        //if (isset($request['i']) && $this->users->getUser($request['i']) !== null) {
+        if (isset($_REQUEST['i']) && $this->users->getUser($_REQUEST['i']) !== null) {
             $curruser = $this->user->getUserID();
         }
-        $user = $_REQUEST['i'];
+        //$user = $_REQUEST['i'];
+        $user = $_SESSION['user']->getUserID();
+
         $friendship = new Friendship($this->site);
-        if (!$friendship->checkFriend($curruser, $user) && $curruser != $user) {
+        if (!$friendship->checkFriend($curruser, $user) && $curruser != $user && $curruser != "") {
             $url = "post/friend-post.php?i=" . $user;
             return <<<HTML
 <p><a href="$url">ADD FRIEND</a></p>
@@ -177,6 +182,28 @@ HTML;
 HTML;
         }
     }
+
+    public function presentFriends()
+    {
+        $friendship = new Friendship($this->site);
+
+        $result = $friendship->getFriend($this->user->getUserID());
+
+        if($result == null)
+        {
+            return null;
+        }
+
+        $html = '<div id="friend_list">';
+        $html .= '<h2>Friends</h2>';
+        foreach($result as $item) {
+            $html .= '<p><a href="profile.php?i='.$item.'">'.$item.'</a></p>';
+        }
+        $html .= '</div>';
+
+        return $html;
+    }
+
     private $user;
     private $site;
     private $users;
