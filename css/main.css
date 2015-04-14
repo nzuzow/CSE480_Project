@@ -192,6 +192,19 @@ footer p {
     margin: 0em auto 0 auto;
     padding-top: 10em;
 }
+section {
+    margin: auto;
+    padding-top: 2.5em;
+
+}
+div#userinfo {
+    padding-left: 5em;
+    float: left;
+}
+div#update {
+    display: inline-block;
+    padding-left: 5em;
+}
 
 #interests {
     width: 25em;
@@ -310,3 +323,13 @@ footer p {
     font-size: 15px;
     text-align: center;
 }
+.user-list {
+    font-family: "Arial", Arial, sans-serif;
+    width: 96%;
+    padding: 0.5em;
+    background: white;
+    margin: 0.5em auto 0.5em auto;
+    border-radius: 0.3em;
+    border: 1pt solid black;
+}
+

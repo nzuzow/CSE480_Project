@@ -37,4 +37,35 @@ SQL;
         }
     }
 
+    public function getInterests($userid) {
+        $sql =<<<SQL
+SELECT interest FROM $this->tableName
+WHERE userID = ?
+SQL;
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array($userid));
+
+        $result = array();  // Empty initial array
+        foreach($statement as $row) {
+            $result[] = $row;
+        }
+
+        return $result;
+
+    }
+
+    public function deleteInterests($userid) {
+        $sql =<<<SQL
+DELETE FROM $this->tableName
+WHERE userID = ?
+SQL;
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array($userid));
+
+        return true;
+
+    }
+
 }

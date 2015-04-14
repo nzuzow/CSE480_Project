@@ -17,8 +17,7 @@ class Format {
         return <<<HTML
 
 <!-- Header and navigation -->
-<header>
-</header>
+<header><h1>$title</h1></header>
 <nav>
 	<ul>
 		<li><a href="./">Home</a></li>

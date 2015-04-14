@@ -14,7 +14,10 @@ $name = $view->getName();
 <?php echo Format::header($name); ?>
 <div class = "main">
 	<div class="left">
-	<?php echo $view->presentProfile(); ?>
+	<?php echo $view->presentCurrUser(); ?>
+	</div>
+	<div class="right">
+			<?php echo $view->presentUsers(); ?>
 	</div>
 </div>
 <?php echo Format::footer(); ?>

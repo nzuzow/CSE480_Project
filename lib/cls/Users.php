@@ -240,4 +240,95 @@ SQL;
         $user_interests->addInterests($userid, $interests);
     }
 
+
+
+    public function updateUser($userid, $name, $email, $password1, $password2, $city, $state, $privacy, $birthyear, $interests, $site) {
+        // Ensure the passwords are valid and equal
+
+        if($password1 != null) {
+            if (strlen($password1) < 8) {
+                return "Passwords must be at least 8 characters long";
+            }
+
+            if ($password1 !== $password2) {
+                return "Passwords are not equal";
+            }
+        }
+        if($birthyear != null) {
+            $birthyear = intval($birthyear);
+            // Check to make sure the year of birth is a 4 digit integer
+            if (!is_int($birthyear) || strlen((string)$birthyear) != 4) {
+                return "Birthyear is not a 4 digit integer";
+            }
+        }
+
+        $users = new Users($this->site);
+        if($email != null) {
+            if ($users->exists($email)) {
+                return "Email address already exists.";
+            }
+            // Make sure the email contains an @ sign
+            if (strpos($email, "@") === false) {
+                return "The email is not valid";
+            }
+        }
+        $user = $users->getUser($userid);
+        if($password1 == null) {
+            $password1 = $user->getPassword();
+        }
+        if($email == null) {
+            $email = $user->getEmail();
+        }
+        if($name == null) {
+            $name = $user->getName();
+        }
+        if($city == null) {
+            $city = $user->getCity();
+        }
+        if($state == null) {
+            $state = $user->getState();
+        }
+        if($privacy == null) {
+            $privacy = $user->getPrivacy();
+        }
+        if($birthyear == null) {
+            $birthyear = $user->getBirthyear();
+        }
+        if($interests != null) {
+            $user_interests = new UserInterests($site);
+            $user_interests->deleteInterests($userid);
+            $user_interests->addInterests($userid, $interests);
+        }
+
+        $sql = <<<SQL
+UPDATE $this->tableName
+SET pass=?, email=?, name=?, city=?, state=?, privacy=?, birthyear=?
+WHERE userID = ?
+SQL;
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array($password1, $email, $name, $city, $state, $privacy, $birthyear, $userid));
+
+        return null;
+    }
+
+    public function getUsers($currUser) {
+        $sql =<<<SQL
+SELECT userID, name
+FROM $this->tableName
+WHERE userID <> ?
+SQL;
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array($currUser));
+
+        $result = array();  // Empty initial array
+        foreach($statement as $row) {
+            $result[] = $row;
+        }
+
+        return $result;
+
+    }
+
 }

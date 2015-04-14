@@ -20,8 +20,7 @@ class User {
         $this->state = $row['state'];
         $this->privacy = $row['privacy'];
         $this->birthyear = $row['birthyear'];
-        //$this->joined = strtotime($row['joined']);
-        //$this->role = $row['role'];
+        $this->password = $row['pass'];
     }
 
     /**
@@ -99,6 +98,21 @@ class User {
     public function getEmail() {
         return $this->email;
     }
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
 
     private $userid;    ///< User-supplied ID
     private $name;      ///< What we call you by
@@ -107,5 +121,8 @@ class User {
     private $state;
     private $privacy;
     private $birthyear;
+    private $password;
+
+
 
 }
