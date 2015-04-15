@@ -38,7 +38,7 @@ HTML;
     {
         return <<<HTML
 <footer>
-<p>Copyright 2015, Super Sightings, Inc.</p>
+<p>CSE 480 Project - Raymond Acker & Nick Zuzow</p>
 </footer>
 HTML;
     }

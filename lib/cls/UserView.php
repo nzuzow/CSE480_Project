@@ -197,7 +197,8 @@ HTML;
         $html = '<div id="friend_list">';
         $html .= '<h2>Friends</h2>';
         foreach($result as $item) {
-            $html .= '<p><a href="profile.php?i='.$item.'">'.$item.'</a></p>';
+            $remove = '    <a href=post/friend-post.php?r='.$item . '>Remove Friend</a>';
+            $html .= '<p><a href="profile.php?i='.$item.'">'.$item.'</a>'.$remove.'</p>';
         }
         $html .= '</div>';
 

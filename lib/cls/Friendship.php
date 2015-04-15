@@ -123,4 +123,15 @@ SQL;
         $statement = $pdo->prepare($sql);
         $statement->execute(array($senderID, $recipientID));
     }
+    public function removeFriend($recipientID, $senderID) {
+        $sql=<<<SQL
+DELETE FROM $this->tableName
+WHERE senderID = ? AND recipientID = ?
+SQL;
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array($senderID, $recipientID));
+    }
+
+
 }

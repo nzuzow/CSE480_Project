@@ -35,3 +35,11 @@ if(isset($_SESSION['user']) && isset($_GET['d'])) {
     header("location: $root/");
     exit;
 }
+if(isset($_SESSION['user']) && isset($_GET['r'])) {
+    $user = $_GET['r'];
+    $curr = $_SESSION['user']->getUserID();
+    $friendship = new Friendship($site);
+    $friendship->removeFriend($curr, $user);
+    header("location: $root/");
+    exit;
+}
