@@ -120,7 +120,7 @@ HTML;
 
         $friendship = new Friendship($this->site);
         if (!$friendship->checkFriend($curruser, $user) && $curruser != $user && $curruser != "") {
-            $url = "post/friend-post.php?i=" . $user;
+            $url = "post/friend-post.php?i=" . $curruser;
             return <<<HTML
 <p><a href="$url">ADD FRIEND</a></p>
 HTML;
@@ -198,6 +198,27 @@ HTML;
         $html .= '<h2>Friends</h2>';
         foreach($result as $item) {
             $html .= '<p><a href="profile.php?i='.$item.'">'.$item.'</a></p>';
+        }
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    public function presentPending()
+    {
+        $friendship = new Friendship($this->site);
+
+        $result = $friendship->getPendingFriend($this->user->getUserID());
+
+        if($result == null)
+        {
+            return null;
+        }
+
+        $html = '<div id="pending_list">';
+        $html .= '<h2>Pending Requests</h2>';
+        foreach($result as $item) {
+            $html .= '<p><a href="profile.php?i='.$item.'">'.$item.'</a>  - <a href="post/friend-post.php?a='.$item.'">Approve</a> | <a href="post/friend-post.php?d='.$item.'">Decline</a></p>';
         }
         $html .= '</div>';
 

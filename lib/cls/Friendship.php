@@ -83,4 +83,44 @@ SQL;
 
         return $result;
     }
+
+    public function getPendingFriend($userid) {
+        $sql=<<<SQL
+SELECT senderID FROM $this->tableName
+WHERE recipientID = ? AND pending = ?
+SQL;
+
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array($userid, '1'));
+
+        $result = array();  // Empty initial array
+        foreach($statement as $row) {
+            $result[] = $row['senderID'];
+        }
+
+        return $result;
+    }
+
+    public function acceptFriend($recipientID, $senderID) {
+        $sql=<<<SQL
+UPDATE $this->tableName
+SET pending=?
+WHERE senderID = ? AND recipientID = ?
+SQL;
+
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array('0', $senderID, $recipientID));
+    }
+
+    public function declineFriend($recipientID, $senderID) {
+        $sql=<<<SQL
+DELETE FROM $this->tableName
+WHERE senderID = ? AND recipientID = ?
+SQL;
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array($senderID, $recipientID));
+    }
 }
