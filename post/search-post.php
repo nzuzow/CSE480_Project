@@ -12,8 +12,9 @@ if(isset($_POST['submit'])) {
       $interest = $_POST['interest'];
       $uInterests = new UserInterests($site);
       $users = $uInterests->getUsers($interest);
-      $test = "<p>" . $users['userID'] . "</p>";
-      echo $test;
+      foreach($users as $item) {
+          echo "<p>" . $item . "</p>";
+      }
   }
   else {
       header("location: ../index.php");

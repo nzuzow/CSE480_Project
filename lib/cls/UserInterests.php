@@ -79,7 +79,7 @@ SQL;
 
         $result = array();  // Empty initial array
         foreach($statement as $row) {
-            $result[] = $row;
+            $result[] = $row['userID'];
         }
 
         return $result;
