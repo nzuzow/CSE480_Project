@@ -68,4 +68,23 @@ SQL;
 
     }
 
+    public function getUsers($interest) {
+        $sql =<<<SQL
+SELECT userID FROM $this->tableName
+WHERE interest = ?
+SQL;
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array($interest));
+
+        $result = array();  // Empty initial array
+        foreach($statement as $row) {
+            $result[] = $row;
+        }
+
+        return $result;
+
+
+    }
+
 }

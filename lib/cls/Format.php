@@ -23,8 +23,9 @@ class Format {
 		<li><a href="./">Home</a></li>
 		<li><a href="profile.php">My Profile</a></li>
 		<li><a href="post/logout-post.php">Log out</a></li>
-	<li><form>
-		<input type="search"> <input type="submit" value="Search">
+	<li><form method="post" action="post/search-post.php" id="searchform">
+		<input type="text" name="interest">
+		<input type="submit" name="submit" value="Search">
 	</form></li>
 	</ul>
 </nav>
