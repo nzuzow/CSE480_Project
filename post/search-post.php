@@ -11,10 +11,12 @@ if(isset($_POST['submit'])) {
   if($_POST['interest']) {
       $interest = $_POST['interest'];
       $uInterests = new UserInterests($site);
-      $users = $uInterests->getUsers($interest);
-      foreach($users as $item) {
-          echo "<p>" . $item . "</p>";
+      $userIDs = $uInterests->getUsers($interest);
+      if($userIDs !== null) {
+          $_SESSION['userIDs'] = $userIDs;
       }
+      header("location: ../search.php");
+      exit;
   }
   else {
       header("location: ../index.php");

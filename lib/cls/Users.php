@@ -331,4 +331,28 @@ SQL;
 
     }
 
+    public function searchUsers($userID) {
+        $sql =<<<SQL
+SELECT *
+FROM $this->tableName
+WHERE userID=? and privacy=?
+SQL;
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+
+        $statement->execute(array($userID, "low"));
+        if($statement->rowCount() === 0) {
+            return false;
+        }
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if(!empty($row)) {
+            return true;
+        }
+
+        return false;
+
+    }
+
 }

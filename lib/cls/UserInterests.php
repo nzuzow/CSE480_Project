@@ -77,6 +77,10 @@ SQL;
         $statement = $pdo->prepare($sql);
         $statement->execute(array($interest));
 
+        if($statement->rowCount() === 0) {
+            return null;
+        }
+
         $result = array();  // Empty initial array
         foreach($statement as $row) {
             $result[] = $row['userID'];
