@@ -52,6 +52,21 @@ HTML;
     public function displayDocuments() {
         $this->document = new Document($this->site);
         $docs = $this->document->getDocuments($this->projid);
+        if(!empty($docs)) {
+            $html = '<div id="doc_list">';
+            $html .= '<h2>Documents</h2>';
+            foreach($docs as $item) {
+                $projid = $item['projID'];
+                $docid = $item['docID'];
+                $ownerID = $item['ownerID'];
+                $title = $item['title'];
+                $html .= '<p><a href="project.php?proj='.$projid.'&ownid='.$ownerID.'">'.$title.'</a></p>';
+            }
+            $html .= '</div>';
+
+            return $html;
+        }
+
     }
 
     private $site;
