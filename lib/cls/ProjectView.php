@@ -49,8 +49,14 @@ HTML;
 
     }
 
+    public function displayDocuments() {
+        $this->document = new Document($this->site);
+        $docs = $this->document->getDocuments($this->projid);
+    }
+
     private $site;
     private $project;
     private $ownerid;
     private $projid;
+    private $document;
 }
