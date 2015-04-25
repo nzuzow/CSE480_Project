@@ -401,3 +401,17 @@ div#update {
     color: #ffffff;
     background-color: #2f574e;/*#18453B;*/
 }
+
+/*Project Page*/
+.proj_display {
+    font-family: "Arial", Arial, sans-serif;
+    /*width: 30%;*/
+    width: 12em;
+    padding: 0.5em;
+    background: white;
+    margin: 0.5em auto 0.5em auto;
+    border-radius: 0.3em;
+    border: 1pt solid black;
+    /*display: inline-block;*/
+    vertical-align: top;
+}
