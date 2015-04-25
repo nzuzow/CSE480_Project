@@ -16,6 +16,7 @@ session_start();
 $user = null;
 if(isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
+    $root = $site->getRoot();
 }
 
 // redirect if user is not logged in
