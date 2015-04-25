@@ -330,7 +330,7 @@ SQL;
         return $result;
 
     }
-
+/*
     public function searchUsers($userID) {
         $sql =<<<SQL
 SELECT *
@@ -352,6 +352,24 @@ SQL;
         }
 
         return false;
+
+    }*/
+    public function checkPrivacy($userID) {
+        $sql =<<<SQL
+SELECT privacy
+FROM $this->tableName
+WHERE userID=?
+SQL;
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array($userID));
+        if($statement->rowCount() === 0) {
+            return null;
+        }
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $row['privacy'];
 
     }
 

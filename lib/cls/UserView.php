@@ -24,6 +24,8 @@ class UserView
             $this->user = $user;
         }
 
+
+
     }
 
     /**
@@ -52,28 +54,37 @@ HTML;
 
     public function presentProfile()
     {
-        $user = $this->user->getUserID();
-        $userID = "Logged In: " . $user;
-        $name = "Name: " . $this->user->getName();
-        $email = "Email: " . $this->user->getEmail();
-        $city = "City: " . $this->user->getCity();
-        $state = "State: " . $this->user->getState();
-        $privacy = "Privacy: " . $this->user->getPrivacy();
-        $birth = "Birth Year: " . $this->user->getBirthyear();
-        $user_interests = new UserInterests($this->site);
-        $interests = $user_interests->getInterests($user);
-        $interest = "Interest: ";
-        $idx = false;
-        foreach ($interests as $item) {
-            if (!$idx) {
-                $interest .= $item[0];
-                $idx = true;
-            } else {
-                $interest .= ", " . $item[0];
-            }
-
+        $loggedUser = $_SESSION['user']->getUserID();
+        if (isset($_REQUEST['i']) && $this->users->getUser($_REQUEST['i']) !== null) {
+            $user = $this->user->getUserID();
         }
-        return <<<HTML
+        else {
+            $user = $loggedUser;
+        }
+
+        $priv = $this->users->checkPrivacy($user);
+        if($priv == "low" || $loggedUser == $user) {
+            $userID = "Logged In: " . $user;
+            $name = "Name: " . $this->user->getName();
+            $email = "Email: " . $this->user->getEmail();
+            $city = "City: " . $this->user->getCity();
+            $state = "State: " . $this->user->getState();
+            $privacy = "Privacy: " . $this->user->getPrivacy();
+            $birth = "Birth Year: " . $this->user->getBirthyear();
+            $user_interests = new UserInterests($this->site);
+            $interests = $user_interests->getInterests($user);
+            $interest = "Interest: ";
+            $idx = false;
+            foreach ($interests as $item) {
+                if (!$idx) {
+                    $interest .= $item[0];
+                    $idx = true;
+                } else {
+                    $interest .= ", " . $item[0];
+                }
+
+            }
+            return <<<HTML
 
 <p>$userID</p>
 <p>$name</p>
@@ -84,6 +95,7 @@ HTML;
 <p>$birth</p>
 <p>$interest</p>
 HTML;
+        }
     }
 
     public function presentUsers()
@@ -185,6 +197,8 @@ HTML;
 
     public function presentFriends()
     {
+        $user = $_SESSION['user']->getUserID();
+
         $friendship = new Friendship($this->site);
 
         $result = $friendship->getFriend($this->user->getUserID());
@@ -197,7 +211,12 @@ HTML;
         $html = '<div id="friend_list">';
         $html .= '<h2>Friends</h2>';
         foreach($result as $item) {
-            $remove = '    <a href=post/friend-post.php?r='.$item . '>Remove Friend</a>';
+            if($user == $this->user->getUserID()) {
+                $remove = '    <a href=post/friend-post.php?r=' . $item . '>Remove Friend</a>';
+            }
+            else {
+                $remove = '';
+            }
             $html .= '<p><a href="profile.php?i='.$item.'">'.$item.'</a>'.$remove.'</p>';
         }
         $html .= '</div>';

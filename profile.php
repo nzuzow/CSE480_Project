@@ -26,6 +26,7 @@ $name = $view->getName();
     <?php echo $view->presentProfile(); ?>
 </div>
     <?php echo $view->presentUpdate(); ?>
+    <?php echo $view->presentFriends(); ?>
     <?php
     if(isset($_SESSION['update-error'])) {
         echo "<p>" . $_SESSION['update-error'] . "</p>";

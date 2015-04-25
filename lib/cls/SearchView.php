@@ -23,26 +23,18 @@ class SearchView {
     public function presentUsers()
     {
         if ($this->userIDs) {
-            $this->result = array();
+            $htmlUsers = '';
             foreach ($this->userIDs as $item) {
-                if ($this->users->searchUsers($item)) {
-                    $this->result[] = $item;
-                }
+                $userid = $item;
+                $url = "profile.php?i=" . $userid;
+                $htmlUsers .= '<p><a href="' . $url . '">' . $userid . '</a></p>';
             }
-            if (!empty($this->result)) {
-                $htmlUsers = '';
-                foreach ($this->result as $item) {
-                    $userid = $item;
-                    $url = "profile.php?i=" . $userid;
-                    $htmlUsers .= '<p><a href="' . $url . '">' . $userid . '</a></p>';
-                }
-                return <<<HTML
+            return <<<HTML
 <div class="user-list">
 <h2>List of Users</h2>
 $htmlUsers
 </div>
 HTML;
-            }
         }
     }
     private $site;
