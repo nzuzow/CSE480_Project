@@ -43,4 +43,37 @@ SQL;
 
         return true;
     }
+
+    /**
+     * @param $ownerid - The id of the user that you are looking for
+     * @return array|bool This will return an array of rows if
+     * the user has current projects. Otherwise it will return false
+     */
+    public function getProject($ownerid) {
+        $sql=<<<SQL
+SELECT * FROM $this->tableName
+WHERE ownerID = ?
+SQL;
+        try {
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute(array($ownerid));
+        }
+        catch(Exception $e) {
+            return false;
+        }
+
+        if($statement->rowCount() === 0) {
+            return false;
+        }
+
+        $result = array();  // Empty initial array
+        foreach($statement as $row) {
+            $result[] = $row;
+        }
+
+        return $result;
+
+    }
 }

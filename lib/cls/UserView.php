@@ -226,6 +226,27 @@ HTML;
         return $html;
     }
 
+    public function presentProjects()
+    {
+        $proj = new Project($this->site);
+        $projects = $proj->getProject($this->user->getUserID());
+
+        if($projects !== false && !empty($projects)) {
+            $html = '<div id="proj_list">';
+            $html .= '<h2>Projects</h2>';
+            foreach($projects as $item) {
+                $projid = $item['projID'];
+                $ownerID = $item['ownerID'];
+                $title = $item['title'];
+                $html .= '<p><a href="project.php?proj='.$projid.'&ownid='.$ownerID.'">'.$title.'</a></p>';
+            }
+            $html .= '</div>';
+
+            return $html;
+        }
+
+    }
+
     private $user;
     private $site;
     private $users;

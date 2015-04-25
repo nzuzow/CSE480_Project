@@ -105,7 +105,7 @@ h1 img {
 }
 
 .left {
-    width: 12em;
+    width: 14em;
     padding: 0;
 }
 
@@ -338,6 +338,21 @@ div#update {
 /*Friends list*/
 #friend_list {
     font-family: "Arial", Arial, sans-serif;
+    /*width: 30%;
+    */
+    width: 12em;
+    padding: 0.5em;
+    background: white;
+    margin: 0.5em auto 0.5em auto;
+    border-radius: 0.3em;
+    border: 1pt solid black;
+    /*display: inline-block;
+    */
+    vertical-align: top;
+}
+
+#pending_list {
+    font-family: "Arial", Arial, sans-serif;
     width: 30%;
     padding: 0.5em;
     background: white;
@@ -348,7 +363,7 @@ div#update {
     vertical-align: top;
 }
 
-#pending_list {
+#proj_list {
     font-family: "Arial", Arial, sans-serif;
     width: 30%;
     padding: 0.5em;

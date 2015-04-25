@@ -32,10 +32,12 @@ $name = $view->getName();
 	?>
 	<div class="left">
 	<?php echo $view->presentCurrUser(); ?>
+	<?php echo $view->presentFriends();?>
 	</div>
 	<div class="right">
 			<?php echo $view->presentUsers(); ?>
-			<?php echo $view->presentFriends();?>
+			<?php //echo $view->presentFriends();?>
+			<?php echo $view->presentProjects();?>
 			<?php echo $view->presentPending();?>
 	</div>
 </div>
