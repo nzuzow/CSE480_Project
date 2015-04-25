@@ -359,3 +359,30 @@ div#update {
     display: inline-block;
     vertical-align: top;
 }
+
+/*New Project*/
+#new_project {
+    width: 15em;
+    margin: 0em auto 0 auto;
+    padding-top: 10em;
+}
+
+#new_desc {
+    font-size: 13px;
+}
+
+.newproj_error, .newproj_success {
+    font-size: 13px;
+    width: 200px;
+    border-radius: 4px;
+    text-align: center;
+}
+.newproj_error {
+    background-color: red;
+    color: #e4e4e4;
+}
+.newproj_success {
+    margin-left: 10em;
+    color: #ffffff;
+    background-color: #2f574e;/*#18453B;*/
+}

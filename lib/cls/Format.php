@@ -22,6 +22,7 @@ class Format {
 	<ul>
 		<li><a href="./">Home</a></li>
 		<li><a href="profile.php">My Profile</a></li>
+		<li><a href="newproject.php">New Project</a></li>
 		<li><a href="post/logout-post.php">Log out</a></li>
 	<li><form method="post" action="post/search-post.php" id="searchform">
 		<input type="text" name="interest">
