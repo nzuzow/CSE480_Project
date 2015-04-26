@@ -49,6 +49,26 @@ HTML;
 
     }
 
+    public function displayAddDoc() {
+        $ownerid = $this->ownerid;
+        $projid = $this->projid;
+
+        $html=<<<HTML
+<div class="proj_display">
+    <h2>Add a Doc:</h2>
+    <form name="new_doc" id="new_doc" method="get" action="document.php">
+        <label for="doc_title">Filename:</label>
+        <input type="text" name="doc_title" id="doc_title"/>
+        <input type="hidden" name="doc_status" value="new"/>
+        <input type="hidden" name="proj_ownerid" value="$ownerid"/>
+        <input type="hidden" name="proj_id" value="$projid"/>
+        <br/>
+        <input type="submit" value="Add"/>
+    </form>
+</div>
+HTML;
+        return $html;
+    }
     public function displayDocuments() {
         $this->document = new Document($this->site);
         $docs = $this->document->getDocuments($this->projid);

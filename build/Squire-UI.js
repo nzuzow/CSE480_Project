@@ -145,6 +145,58 @@ $(document).ready(function() {
                     if (test.testQuote) editor.decreaseQuoteLevel();
                 } else if (test.isNotValue('makeLink') | test.isNotValue('insertImage') | test.isNotValue('selectFont')) {
                     // do nothing these are dropdowns.
+                } else if(test.isNotValue('save')) {
+                    // This else if gets run if the user clicks the save button
+
+                    // Need to get the data from the document.
+                    var doc_text = editor.getHTML();
+
+                    // This will get the status of the document from the hidden
+                    // input field on the document.php page. The status should
+                    // either be new or old. This will be used in savedoc-post
+                    // to determine if this is a new document which will be a
+                    // parent document or if this is an old document which will
+                    // have a version number.
+                    var status = $("#doc_status").val();
+
+                    // This will get the title of the document from the hidden
+                    // input field on the document.php page
+                    var title = $("#doc_title").val();
+
+                    // This will get the owner of the project that this document
+                    // belongs to from the hidden input on the document.php page
+                    var proj_ownerid = $("#proj_ownerid").val();
+
+                    // This will get the projectid from the hidden input on the
+                    // document.php page
+                    var proj_id = $("#proj_id").val();
+
+                    var data = {
+                        content : doc_text,
+                        status: status,
+                        title: title,
+                        proj_ownerid: proj_ownerid,
+                        proj_id: proj_id
+                    };
+                    $.ajax({
+                        url: "post/savedoc-post.php",
+                        data: data,
+                        method: "POST",
+                        success: function(data) {
+                            var res = data.split(";");
+                            alert(res[0]);
+                            //alert("The site root is: "+dir);
+
+                            // Get the current site root
+                            var loc = window.location.pathname;
+                            var dir = loc.substring(0, loc.lastIndexOf('/'));
+                            window.location = dir + "/project.php?"+res[1];
+                        },
+                        error: function(xhr, status, error) {
+                            alert("There was an error saving this document");
+                            return false;
+                        }
+                    });
                 } else {
                     editor[action]();
                     editor.focus();

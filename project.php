@@ -40,6 +40,7 @@ $title = $projView->getTitle();
 <div class = "main">
     <div class="left">
         <?php echo $projView->displayOwner();?>
+        <?php echo $projView->displayAddDoc();?>
     </div>
     <div class="right">
         <?php echo $projView->displayCollaborators();?>

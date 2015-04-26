@@ -15,6 +15,26 @@ class Document extends Table {
         parent::__construct($site, "Document");
     }
 
+    public function addDocument($projID, $projOwnerID, $creatorID, $fileName, $versionNo, $createTime, $parentDocID)
+    {
+        $sql=<<<SQL
+INSERT INTO $this->tableName(projID, projOwnerID, creatorID, fileName, versionNo, createTime, parentDocID)
+VALUES (?, ?, ?, ?, ?, ?, ?)
+SQL;
+
+        try {
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute(array($projID, $projOwnerID, $creatorID, $fileName, $versionNo, $createTime, $parentDocID));
+        }
+        catch(Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function getDocuments($projID) {
         $sql =<<<SQL
         SELECT *
