@@ -415,3 +415,10 @@ div#update {
     /*display: inline-block;*/
     vertical-align: top;
 }
+
+/*Document Page*/
+.document_contain {
+    font-family: "Arial", Arial, sans-serif;
+    width: 800px;
+    margin: 0.5em auto 0.5em auto;
+}
