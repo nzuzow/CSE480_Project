@@ -62,6 +62,34 @@ SQL;
 
         return $result;
 
+    }
 
+    public function getDocumentById($docID) {
+        $sql=<<<SQL
+SELECT *
+FROM $this->tableName
+WHERE docID = ?
+SQL;
+        try {
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute(array($docID));
+        }
+        catch(Exception $e) {
+            return false;
+        }
+
+        if($statement->rowCount() === 0) {
+            return false;
+        }
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if(!empty($row)) {
+            return $row;
+        }
+
+        return false;
     }
 }

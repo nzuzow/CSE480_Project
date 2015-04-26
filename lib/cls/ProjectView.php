@@ -81,7 +81,8 @@ HTML;
                 $docid = $item['docID'];
                 $ownerID = $item['projOwnerID'];
                 $title = $item['fileName'];
-                $html .= '<p><a href="document.php?doc_status=old&doc_title='.$title.'&proj_ownerid='.$ownerID.'&proj_id='.$projid.'&p_docid='.$docid.'">'.$title.'</a></p>';
+                $version = $item['versionNo'];
+                $html .= '<p><a href="document.php?doc_status=old&doc_title='.$title.'&proj_ownerid='.$ownerID.'&proj_id='.$projid.'&p_docid='.$docid.'">'.$title.' - version '.$version.'</a></p>';
                 //$html .= '<p><a href="project.php?proj='.$projid.'&ownid='.$ownerID.'">'.$title.'</a></p>';
             }
             $html .= '</div>';

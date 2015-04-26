@@ -32,6 +32,8 @@ $(document).ready(function() {
         div.className = 'Squire-UI';
         iframe.height = options.height;
 
+
+
         $(div).load(options.buildPath + 'Squire-UI.html', function() {
             this.linkDrop = new Drop({
                 target: $('#makeLink').first()[0],
@@ -171,12 +173,22 @@ $(document).ready(function() {
                     // document.php page
                     var proj_id = $("#proj_id").val();
 
+                    // This will get the old version number for cases
+                    // where we are editing a document
+                    var old_version = $("#old_version").val();
+
+                    // This is the docid of the parent for when we are
+                    // editing a current document.
+                    var p_docid = $("#p_docid").val();
+
                     var data = {
                         content : doc_text,
                         status: status,
                         title: title,
                         proj_ownerid: proj_ownerid,
-                        proj_id: proj_id
+                        proj_id: proj_id,
+                        old_version: old_version,
+                        p_docid: p_docid
                     };
                     $.ajax({
                         url: "post/savedoc-post.php",
@@ -209,7 +221,7 @@ $(document).ready(function() {
             var doc = iframe.contentDocument;
             if ( doc.compatMode !== 'CSS1Compat' ) {
                 doc.open();
-                doc.write( '<!DOCTYPE html><title></title>' );
+                doc.write('<!DOCTYPE html><title></title>');
                 doc.close();
             }
             // doc.close() can cause a re-entrant load event in some browsers,
@@ -219,6 +231,14 @@ $(document).ready(function() {
             }
             iframe.contentWindow.editor = new Squire(iframe.contentWindow.document);
             iframe.contentWindow.document.head.appendChild(style);
+
+            // This is where we load in the contents of the file
+            // If we are editing a current file.
+            if($("#doc_status").val() == "old") {
+                var file_content = $("#old_contents").val();
+                var editor = iframe.contentWindow.editor;
+                editor.setHTML(file_content);
+            }
         });
 
         $(container).append(div);

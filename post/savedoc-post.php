@@ -28,6 +28,8 @@ if(isset($_POST['content']) && isset($_POST['status']) && isset($_POST['title'])
     $creatorID = $user->getUserID();
     $fileName = $_POST['title'];
     $status = $_POST['status'];
+    $old_version = $_POST['old_version'];
+    $p_docid = $_POST['p_docid'];
 
     if($status == "new") {
         $versionNo = "1";
@@ -38,6 +40,13 @@ if(isset($_POST['content']) && isset($_POST['status']) && isset($_POST['title'])
         // Need to get the current version number
         // and increment it by 1. Also we need to get the
         // document ID of the parent document.
+        if($old_version != "") {
+            $versionNo = $old_version + 1;
+        }
+
+        if($p_docid != "") {
+            $parentDocID = $p_docid;
+        }
     }
 
     $createTime = new DateTime();

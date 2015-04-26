@@ -9,6 +9,9 @@ require "lib/site.inc.php";
 // initialize doc_status to be old, then we will over-write this
 // if the user is trying to create a new document.
 $doc_status = "old";
+$file_contents = "";
+$version_num = "";
+$p_docid = "";
 
 if(isset($_GET['doc_status']) && $_GET['doc_status'] == "new") {
     // This is a new document
@@ -33,7 +36,18 @@ if(isset($_GET['doc_status']) && $_GET['doc_status'] == "old") {
     // The value stored in $p_docid above is really the docID that we want
     // from the Documents database, so we should be able to create a
     // function in the Documents class and just pass it that docid and
-    // get everything from the database based on that. 
+    // get everything from the database based on that.
+    $doc = new Document($site);
+    $doc_row = $doc->getDocumentById($p_docid);
+
+    $creator_id = $doc_row['creatorID'];
+    $version_num = $doc_row['versionNo'];
+    $old_p_docid = $doc_row['parentDocID'];
+    // Replace any spaces with "-" in the filename
+    $filename2 = str_replace(" ", "-", $filename);
+    $path = "Documents/".$proj_id."_".$creator_id."_".$version_num."_".$old_p_docid."_".$filename2.".txt";
+
+    $file_contents = file_get_contents($path);
 }
 ?>
 <!DOCTYPE html>
@@ -64,6 +78,9 @@ if(isset($_GET['doc_status']) && $_GET['doc_status'] == "old") {
     echo '<input type="hidden" name="doc_title" id="doc_title" value="'.$filename.'"/>';
     echo '<input type="hidden" name="proj_ownerid" id="proj_ownerid" value="'.$proj_owner.'"/>';
     echo '<input type="hidden" name="proj_id" id="proj_id" value="'.$proj_id.'"/>';
+    echo '<input type="hidden" name="old_contents" id="old_contents" value="'.$file_contents.'"/>';
+    echo '<input type="hidden" name="old_version" id="old_version" value="'.$version_num.'"/>';
+    echo '<input type="hidden" name="p_docid" id="p_docid" value="'.$p_docid.'"/>';
     ?>
 </div>
 <?php echo Format::footer(); ?>
