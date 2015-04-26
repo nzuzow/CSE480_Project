@@ -415,6 +415,10 @@ div#update {
     /*display: inline-block;*/
     vertical-align: top;
 }
+.proj_right {
+    width: 30%;
+    display: inline-block;
+}
 
 /*Document Page*/
 .document_contain {

@@ -38,7 +38,7 @@ HTML;
         // THIS IS JUST A STUB RIGHT NOW. FUNCTIONALITY WILL NEED TO
         // BE ADDED TO MAKE THIS ACTUALLY WORK LATER
         $html=<<<HTML
-<div class="proj_display">
+<div class="proj_display proj_right">
     <h2>Collaborators:</h2>
     <p><a href="#">TestID1</a></p>
     <p><a href="#">TestID2</a></p>
@@ -69,18 +69,20 @@ HTML;
 HTML;
         return $html;
     }
+
     public function displayDocuments() {
         $this->document = new Document($this->site);
         $docs = $this->document->getDocuments($this->projid);
-        if(!empty($docs)) {
-            $html = '<div id="doc_list">';
+        if(!empty($docs) && $docs !== false) {
+            $html = '<div class="proj_display proj_right" id="doc_list">';
             $html .= '<h2>Documents</h2>';
             foreach($docs as $item) {
                 $projid = $item['projID'];
                 $docid = $item['docID'];
-                $ownerID = $item['ownerID'];
-                $title = $item['title'];
-                $html .= '<p><a href="project.php?proj='.$projid.'&ownid='.$ownerID.'">'.$title.'</a></p>';
+                $ownerID = $item['projOwnerID'];
+                $title = $item['fileName'];
+                $html .= '<p><a href="document.php?doc_status=old&doc_title='.$title.'&proj_ownerid='.$ownerID.'&proj_id='.$projid.'&p_docid='.$docid.'">'.$title.'</a></p>';
+                //$html .= '<p><a href="project.php?proj='.$projid.'&ownid='.$ownerID.'">'.$title.'</a></p>';
             }
             $html .= '</div>';
 

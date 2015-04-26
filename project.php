@@ -20,19 +20,6 @@ $title = $projView->getTitle();
     <meta charset="UTF-8">
     <title>Project Page</title>
     <link href="css/main.css" type="text/css" rel="stylesheet" />
-    <!--<link type="text/css" rel="stylesheet" href="css/Squire-UI.css"/>
-    -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            var editor;
-
-            $(iframe).load(function() {
-               editor = iframe.contentWindow.editor
-            });
-        });
-    </script>
 </head>
 <body>
 <?php echo Format::header($title); ?>
@@ -43,11 +30,10 @@ $title = $projView->getTitle();
         <?php echo $projView->displayAddDoc();?>
     </div>
     <div class="right">
+        <?php echo $projView->displayDocuments();?>
         <?php echo $projView->displayCollaborators();?>
     </div>
 </div>
-<!--<iframe src="build/document.html"></iframe>
--->
 <?php echo Format::footer(); ?>
 </body>
 </html>

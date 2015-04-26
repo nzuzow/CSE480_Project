@@ -17,6 +17,24 @@ if(isset($_GET['doc_status']) && $_GET['doc_status'] == "new") {
     $proj_owner = $_GET['proj_ownerid'];
     $proj_id = $_GET['proj_id'];
 }
+if(isset($_GET['doc_status']) && $_GET['doc_status'] == "old") {
+    // This means we have a document that has already been created.
+    // We now need to get the title, the ownerID, the projID, and the
+    // parentDocID from the URL.
+    $doc_status = $_GET['doc_status'];
+    $filename = $_GET['doc_title'];
+    $proj_owner = $_GET['proj_ownerid'];
+    $proj_id = $_GET['proj_id'];
+    $p_docid = $_GET['p_docid'];
+
+    // We also need to load in the contents of the file here.
+    // The files are stored with projID_creatorID_versionNo_parentDocID_filename.txt
+    // I believe this would be best implemented in the Documents class.
+    // The value stored in $p_docid above is really the docID that we want
+    // from the Documents database, so we should be able to create a
+    // function in the Documents class and just pass it that docid and
+    // get everything from the database based on that. 
+}
 ?>
 <!DOCTYPE html>
 <html>
