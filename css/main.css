@@ -421,8 +421,19 @@ div#update {
 }
 
 /*Document Page*/
+.left_sidebar {
+    width: 225px;
+    background: white;
+    margin: 0.5em 0.5em 0.5em auto;
+    border-radius: 0.3em;
+    border: 1px solid #919191;
+    vertical-align: top;
+    display: inline-block;
+}
 .document_contain {
     font-family: "Arial", Arial, sans-serif;
     width: 800px;
     margin: 0.5em auto 0.5em auto;
+    display: inline-block;
+    vertical-align: top;
 }

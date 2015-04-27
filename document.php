@@ -48,6 +48,55 @@ if(isset($_GET['doc_status']) && $_GET['doc_status'] == "old") {
     $path = "Documents/".$proj_id."_".$creator_id."_".$version_num."_".$old_p_docid."_".$filename2.".txt";
 
     $file_contents = file_get_contents($path);
+
+    // We need to get information to display the document tree.
+    // I'm going to do it here since we already have some of the proper
+    // information
+
+    // Setup an array of Parentid => documentid pairs.
+    // Initialize this array with the current docid and parentid
+    //$doc_tree[$old_p_docid] = $p_docid;
+    //$doc_tree = array();
+
+    // Initialize curr docid and curr parent docid
+    $curr_docid = $p_docid;
+    $curr_parent_docid = $old_p_docid;
+    $curr_vnum = $version_num;
+
+    $doc_view = new DocumentView($site);
+    $doc_tree = $doc_view->getDocumentTree($curr_docid, $curr_parent_docid, $curr_vnum, $filename);
+
+    /*while(true) {
+        $par_doc = $doc->getDocumentById($curr_parent_docid);
+
+        if($par_doc === false)
+        {
+            break;
+        }
+
+        $par_version_num = $par_doc['versionNo'];
+
+        if ($par_version_num == "1") {
+            //$doc_tree[$curr_parent_docid] = $curr_docid;
+            $doc_tree[$par_version_num] = $curr_vnum;
+            break;
+        }
+        else {
+            // Add to the array, and then swap the values and
+            // loop again
+            $doc_tree[$par_version_num] = $curr_vnum;
+            //$doc_tree[$curr_parent_docid] = $curr_docid;
+
+            $curr_docid = $curr_parent_docid;
+            $curr_parent_docid = $par_doc['parentDocID'];
+            $curr_vnum = $par_version_num;
+        }
+
+    }
+    ksort($doc_tree);
+    foreach($doc_tree as $key => $val) {
+        echo "The parent of: ".$val." is: ".$key."<br/>";
+    }*/
 }
 ?>
 <!DOCTYPE html>
@@ -70,6 +119,14 @@ if(isset($_GET['doc_status']) && $_GET['doc_status'] == "old") {
 <body>
 <?php echo Format::header($filename); ?>
 <div class = "main">
+    <div class="left_sidebar">
+        <?php
+        if($doc_status == "old") {
+        echo $doc_tree;
+        }
+        ?>
+    </div>
+
     <div class="document_contain">
         <textarea id="text_input"></textarea>
         <!--<iframe src="build/document.html"></iframe>-->
