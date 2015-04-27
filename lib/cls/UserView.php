@@ -274,7 +274,8 @@ HTML;
             foreach ($invites as $item) {
                 $projid = $item;
                 $url = "post/invite-post.php?i=" . $userid . "&proj=" . $projid . "&s=a";
-                $htmlUsers .= '<p>'. $projid .' <a href="' . $url . '">Accept</a></p>';
+                $urld = "post/invite-post.php?i=" . $userid . "&proj=" . $projid . "&s=d";
+                $htmlUsers .= '<p>'. $projid .' <a href="' . $url . '">Accept</a> | <a href="' . $urld . '">Decline</a></p>';
             }
             return <<<HTML
 <div id="invite_list">
