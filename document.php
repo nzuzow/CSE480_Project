@@ -13,6 +13,13 @@ $file_contents = "";
 $version_num = "";
 $p_docid = "";
 
+$fileNameTest = str_replace(" ", "", $_GET['doc_title']);
+if(!$fileNameTest)  {
+    $url = $root . "/project.php?proj=" . $_GET['proj_id'] . "&ownid=" . $_GET['proj_ownerid'];
+    header("location: $url");
+    exit;
+}
+
 if(isset($_GET['doc_status']) && $_GET['doc_status'] == "new") {
     // This is a new document
     $doc_status = $_GET['doc_status'];

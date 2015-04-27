@@ -17,6 +17,7 @@ class ProjectView {
         $this->project = new Project($site);
         $this->ownerid = $ownerid;
         $this->projid = $projid;
+        $this->invitation = new Invitation($site);
     }
 
     public function getTitle() {
@@ -35,17 +36,21 @@ HTML;
     }
 
     public function displayCollaborators() {
-        // THIS IS JUST A STUB RIGHT NOW. FUNCTIONALITY WILL NEED TO
-        // BE ADDED TO MAKE THIS ACTUALLY WORK LATER
-        $html=<<<HTML
+        $collabs = $this->invitation->getAcceptedCollabs($this->projid);
+        $htmlUsers = '';
+        if (!empty($collabs)) {
+            foreach ($collabs as $item) {
+                $userid = $item;
+                $url = "profile.php?i=" . $userid;
+                $htmlUsers .= '<p><a href="' . $url . '">' . $userid . '</a></p>';
+            }
+            return <<<HTML
 <div class="proj_display proj_right">
-    <h2>Collaborators:</h2>
-    <p><a href="#">TestID1</a></p>
-    <p><a href="#">TestID2</a></p>
-    <p><a href="#">TestID3</a></p>
+<h2>Collaborators</h2>
+$htmlUsers
 </div>
 HTML;
-        return $html;
+        }
 
     }
 
@@ -92,9 +97,35 @@ HTML;
 
     }
 
+    public function displayNonCollabs()
+    {
+        $users = new Users($this->site);
+        $collabs = $this->invitation->getCollaborators($this->projid);
+        $collabsStr = '';
+        foreach($collabs as $collab) {
+            $collabsStr .= $collab . ",";
+        }
+        $nonCollabs = $users->getNonCollabs($this->ownerid, $collabsStr);
+        $htmlUsers = '';
+        if (!empty($nonCollabs)) {
+            foreach ($nonCollabs as $item) {
+                $userid = $item['userID'];
+                $url = "post/invite-post.php?i=" . $userid . "&ownid=" . $this->ownerid . "&proj=" . $this->projid;
+                $htmlUsers .= '<p>' . $userid . ' <a href="' . $url . '">Add</a></p>';
+            }
+            return <<<HTML
+<div class="user-list">
+<h2>Invite Users</h2>
+$htmlUsers
+</div>
+HTML;
+        }
+    }
+
     private $site;
     private $project;
     private $ownerid;
     private $projid;
     private $document;
+    private $invitation;
 }

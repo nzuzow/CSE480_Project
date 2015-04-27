@@ -13,6 +13,7 @@ if(isset($_GET['proj']) && isset($_GET['ownid'])) {
 }
 $projView = new ProjectView($site, $ownerid, $projid);
 $title = $projView->getTitle();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,6 +33,7 @@ $title = $projView->getTitle();
     <div class="right">
         <?php echo $projView->displayDocuments();?>
         <?php echo $projView->displayCollaborators();?>
+        <?php echo $projView->displayNonCollabs();?>
     </div>
 </div>
 <?php echo Format::footer(); ?>

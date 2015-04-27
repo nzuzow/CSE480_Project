@@ -373,4 +373,35 @@ SQL;
 
     }
 
+    public function getNonCollabs($ownerid, $collabs) {
+        $sql =<<<SQL
+SELECT userID
+FROM $this->tableName
+WHERE userID<>? AND userID NOT IN (SELECT userID
+                                    FROM $this->tableName
+                                    WHERE FIND_IN_SET(userID, ?))
+SQL;
+        try {
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute(array($ownerid, $collabs));
+        }
+        catch(Exception $e) {
+            return false;
+        }
+
+        if($statement->rowCount() === 0) {
+            return false;
+        }
+
+        $result = array();  // Empty initial array
+        foreach($statement as $row) {
+            $result[] = $row;
+        }
+
+        return $result;
+
+    }
+
 }

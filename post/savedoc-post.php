@@ -60,31 +60,31 @@ if(isset($_POST['content']) && isset($_POST['status']) && isset($_POST['title'])
     $createTime = new DateTime();
     $createTime = $createTime->format('Y-m-d H:i:s');
 
+
     $doc_resp = $doc->addDocument($projID, $projOwnerID, $creatorID, $fileName, $versionNo, $createTime, $parentDocID);
 
-    if($doc_resp == true)
-    {
+    if ($doc_resp == true) {
         // Make sure the filename is one word by replacing the spaces with
         // dashes.
         $fileName2 = str_replace(" ", "-", $fileName);
 
         // The project was added to the database. Now we need to
         // save the file in the Documents folder on the server.
-        $path = "../Documents/".$projID."_".$creatorID."_".$versionNo."_".$parentDocID."_".$fileName2.".txt";
+        $path = "../Documents/" . $projID . "_" . $creatorID . "_" . $versionNo . "_" . $parentDocID . "_" . $fileName2 . ".txt";
 
         // Write the contents back to the file
         file_put_contents($path, $content);
         chmod($path, 0777);
     }
-    if($doc_resp == false)
-    {
+    if ($doc_resp == false) {
         // There was an error.
         return false;
     }
 
-    $return[] = "The document ".$fileName." was added successfully";
-    $return[] = "proj=".$projID."&ownid=".$projOwnerID;
-    echo $return[0].";".$return[1];
+    $return[] = "The document " . $fileName . " was added successfully";
+    $return[] = "proj=" . $projID . "&ownid=" . $projOwnerID;
+    echo $return[0] . ";" . $return[1];
+
 
 }
 ?>
