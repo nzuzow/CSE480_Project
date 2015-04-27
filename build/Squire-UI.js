@@ -242,12 +242,11 @@ $(document).ready(function() {
             }
         });
 
-        /*$(container).append(div);
+        $(container).append(div);
         $(container).append(iframe);
 
         var style = document.createElement('style');
         style.innerHTML = 'blockquote { border-left: 3px green solid; padding-left: 5px; }';
-        */
 
         return iframe.contentWindow.editor;
     };

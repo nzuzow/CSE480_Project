@@ -15,6 +15,31 @@ class Document extends Table {
         parent::__construct($site, "Document");
     }
 
+    public function getVersionNum($projID, $projOwnerID, $fileName) {
+        $sql=<<<SQL
+SELECT MAX(versionNo) FROM $this->tableName
+WHERE projID = ? AND projOwnerID = ? AND fileName = ?
+SQL;
+        try {
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute(array($projID, $projOwnerID, $fileName));
+        }
+        catch(Exception $e) {
+            return false;
+        }
+        if($statement->rowCount() === 0) {
+            return false;
+        }
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if(!empty($row)) {
+            return $row['MAX(versionNo)'];
+        }
+    }
+
     public function addDocument($projID, $projOwnerID, $creatorID, $fileName, $versionNo, $createTime, $parentDocID)
     {
         $sql=<<<SQL
@@ -33,13 +58,6 @@ SQL;
         }
 
         return true;
-    }
-
-    public function getVersionNum($projID, $projOwnerID, $fileName) {
-        /*$sql=<<<SQL
-SELECT * FROM $this->tableName
-WHERE
-SQL;*/
     }
 
     public function getDocuments($projID) {

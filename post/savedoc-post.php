@@ -41,7 +41,15 @@ if(isset($_POST['content']) && isset($_POST['status']) && isset($_POST['title'])
         // and increment it by 1. Also we need to get the
         // document ID of the parent document.
         if($old_version != "") {
-            $versionNo = $old_version + 1;
+
+            $max_vnum = $doc->getVersionNum($projID, $projOwnerID, $fileName);
+
+            if ($max_vnum === false) {
+                // There was an error. Not sure what to do in this case
+            }
+            else {
+                $versionNo = $max_vnum + 1;
+            }
         }
 
         if($p_docid != "") {
