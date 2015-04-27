@@ -230,8 +230,9 @@ $(document).ready(function() {
                 return;
             }
             iframe.contentWindow.editor = new Squire(iframe.contentWindow.document);
-            iframe.contentWindow.document.head.appendChild(style);
-
+            if(style) {
+                iframe.contentWindow.document.head.appendChild(style);
+            }
             // This is where we load in the contents of the file
             // If we are editing a current file.
             if($("#doc_status").val() == "old") {
