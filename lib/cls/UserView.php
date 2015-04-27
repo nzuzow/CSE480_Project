@@ -265,6 +265,25 @@ HTML;
         }
 
     }
+    public function presentInvites() {
+        $invitation = new Invitation($this->site);
+        $userid = $_SESSION['user']->getUserID();
+        $invites = $invitation->getPending($userid);
+        $htmlUsers = '';
+        if (!empty($invites)) {
+            foreach ($invites as $item) {
+                $projid = $item;
+                $url = "post/invite-post.php?i=" . $userid . "&proj=" . $projid . "&s=a";
+                $htmlUsers .= '<p>'. $projid .' <a href="' . $url . '">Accept</a></p>';
+            }
+            return <<<HTML
+<div id="invite_list">
+<h2>Project Invites</h2>
+$htmlUsers
+</div>
+HTML;
+        }
+    }
 
     private $user;
     private $site;

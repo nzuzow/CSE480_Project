@@ -84,6 +84,34 @@ SQL;
         return $result;
 
     }
+    public function getPending($userid) {
+        $sql =<<<SQL
+SELECT projID
+FROM $this->tableName
+WHERE collaboratorID=? AND status=?
+SQL;
+        try {
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute(array($userid, 'pending'));
+        }
+        catch(Exception $e) {
+            return false;
+        }
+
+        if($statement->rowCount() === 0) {
+            return false;
+        }
+
+        $result = array();  // Empty initial array
+        foreach($statement as $row) {
+            $result[] = $row['projID'];
+        }
+
+        return $result;
+
+    }
 
 
 }
