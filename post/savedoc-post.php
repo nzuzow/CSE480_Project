@@ -66,6 +66,7 @@ if(isset($_POST['content']) && isset($_POST['status']) && isset($_POST['title'])
 
         // Write the contents back to the file
         file_put_contents($path, $content);
+        chmod($path, 0777);
     }
     if($doc_resp == false)
     {

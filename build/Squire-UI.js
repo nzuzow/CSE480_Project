@@ -215,7 +215,7 @@ $(document).ready(function() {
                 }
             });
         });
-
+        
         iframe.addEventListener('load', function() {
             // Make sure we're in standards mode.
             var doc = iframe.contentDocument;
@@ -241,11 +241,12 @@ $(document).ready(function() {
             }
         });
 
-        $(container).append(div);
+        /*$(container).append(div);
         $(container).append(iframe);
 
         var style = document.createElement('style');
         style.innerHTML = 'blockquote { border-left: 3px green solid; padding-left: 5px; }';
+        */
 
         return iframe.contentWindow.editor;
     };

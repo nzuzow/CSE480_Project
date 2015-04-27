@@ -35,6 +35,13 @@ SQL;
         return true;
     }
 
+    public function getVersionNum($projID, $projOwnerID, $fileName) {
+        /*$sql=<<<SQL
+SELECT * FROM $this->tableName
+WHERE
+SQL;*/
+    }
+
     public function getDocuments($projID) {
         $sql =<<<SQL
         SELECT *
