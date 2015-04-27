@@ -55,6 +55,14 @@ if(isset($_GET['doc_status']) && $_GET['doc_status'] == "old") {
     $path = "Documents/".$proj_id."_".$creator_id."_".$version_num."_".$old_p_docid."_".$filename2.".txt";
 
     $file_contents = file_get_contents($path);
+
+    // Initialize curr docid and curr parent docid
+    $curr_docid = $p_docid;
+    $curr_parent_docid = $old_p_docid;
+    $curr_vnum = $version_num;
+
+    $doc_view = new DocumentView($site);
+    $doc_tree = $doc_view->getDocumentTree($curr_docid, $curr_parent_docid, $curr_vnum, $filename);
 }
 ?>
 <!DOCTYPE html>
@@ -77,6 +85,14 @@ if(isset($_GET['doc_status']) && $_GET['doc_status'] == "old") {
 <body>
 <?php echo Format::header($filename); ?>
 <div class = "main">
+    <div class="left_sidebar">
+        <?php
+        if($doc_status == "old") {
+        echo $doc_tree;
+        }
+        ?>
+    </div>
+
     <div class="document_contain">
         <textarea id="text_input"></textarea>
         <!--<iframe src="build/document.html"></iframe>-->
