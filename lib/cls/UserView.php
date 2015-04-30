@@ -64,27 +64,49 @@ HTML;
 
         $priv = $this->users->checkPrivacy($user);
         if($priv == "low" || $loggedUser == $user) {
-            $userID = "Logged In: " . $user;
-            $name = "Name: " . $this->user->getName();
-            $email = "Email: " . $this->user->getEmail();
-            $city = "City: " . $this->user->getCity();
-            $state = "State: " . $this->user->getState();
-            $privacy = "Privacy: " . $this->user->getPrivacy();
-            $birth = "Birth Year: " . $this->user->getBirthyear();
-            $user_interests = new UserInterests($this->site);
-            $interests = $user_interests->getInterests($user);
-            $interest = "Interest: ";
-            $idx = false;
-            foreach ($interests as $item) {
-                if (!$idx) {
-                    $interest .= $item[0];
-                    $idx = true;
-                } else {
-                    $interest .= ", " . $item[0];
+        }
+        elseif($priv == 'medium') {
+            $invitations = new Invitation($this->site);
+            $user1projs = array();
+            $user2projs = array();
+            $collaborators = false;
+            foreach($user1projs as $item1) {
+                foreach($user2projs as $item2) {
+                    if($item1 == $item2){
+                        $collaborators = true;
+                        break;
+                    }
                 }
-
             }
-            return <<<HTML
+            if($collaborators == true) {
+                return $this->displayProfile($user);
+            }
+
+        }
+    }
+
+    public function displayProfile($user) {
+        $userID = "Logged In: " . $user;
+        $name = "Name: " . $this->user->getName();
+        $email = "Email: " . $this->user->getEmail();
+        $city = "City: " . $this->user->getCity();
+        $state = "State: " . $this->user->getState();
+        $privacy = "Privacy: " . $this->user->getPrivacy();
+        $birth = "Birth Year: " . $this->user->getBirthyear();
+        $user_interests = new UserInterests($this->site);
+        $interests = $user_interests->getInterests($user);
+        $interest = "Interest: ";
+        $idx = false;
+        foreach ($interests as $item) {
+            if (!$idx) {
+                $interest .= $item[0];
+                $idx = true;
+            } else {
+                $interest .= ", " . $item[0];
+            }
+
+        }
+        return <<<HTML
 
 <p>$userID</p>
 <p>$name</p>
@@ -95,7 +117,6 @@ HTML;
 <p>$birth</p>
 <p>$interest</p>
 HTML;
-        }
     }
 
     public function presentUsers()
