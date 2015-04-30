@@ -67,26 +67,56 @@ HTML;
         }
         elseif($priv == 'medium') {
             $invitations = new Invitation($this->site);
-            $user1projs = array();
-            $user2projs = array();
+            $user1projs = $invitations->getProjForCollab($user);
+            $user2projs = $invitations->getProjForCollab($loggedUser);
             $collaborators = false;
-            foreach($user1projs as $item1) {
-                foreach($user2projs as $item2) {
-                    if($item1 == $item2){
-                        $collaborators = true;
-                        break;
+            if (!empty($user1projs) && !empty($user2projs)) {
+                foreach ($user1projs as $item1) {
+                    foreach ($user2projs as $item2) {
+                        if ($item1 == $item2) {
+                            $collaborators = true;
+                            break;
+                        }
                     }
                 }
+                if ($collaborators == true) {
+                    return $this->displayProfile($user);
+                }
             }
-            if($collaborators == true) {
-                return $this->displayProfile($user);
+            else {
+                $userID = "Login ID: " . $user;
+                $user_interests = new UserInterests($this->site);
+                $interests = $user_interests->getInterests($user);
+                $interest = "Interest: ";
+                $idx = false;
+                foreach ($interests as $item) {
+                    if (!$idx) {
+                        $interest .= $item[0];
+                        $idx = true;
+                    } else {
+                        $interest .= ", " . $item[0];
+                    }
+
+                }
+                return <<<HTML
+
+<p>$userID</p>
+<p>$interest</p>
+HTML;
             }
 
+        }
+        elseif($priv == 'high') {
+            $friendship = new Friendship($this->site);
+            if($friendship->checkFriend($user, $loggedUser))
+            {
+                return $this->displayProfile($user);
+            }
         }
     }
 
     public function displayProfile($user) {
-        $userID = "Logged In: " . $user;
+        $userID = "Login ID: " . $user;
         $name = "Name: " . $this->user->getName();
         $email = "Email: " . $this->user->getEmail();
         $city = "City: " . $this->user->getCity();
