@@ -33,7 +33,11 @@ $title = $projView->getTitle();
     <div class="right">
         <?php echo $projView->displayDocuments();?>
         <?php echo $projView->displayCollaborators();?>
-        <?php echo $projView->displayNonCollabs();?>
+        <?php
+        if($ownerid == $user->getUserID()) {
+            echo $projView->displayNonCollabs();
+        }
+        ?>
     </div>
 </div>
 <?php echo Format::footer(); ?>
