@@ -39,6 +39,7 @@ $name = $view->getName();
 			<?php //echo $view->presentFriends();?>
 			<?php echo $view->presentProjects();?>
 			<?php echo $view->presentPending();?>
+			<?php echo $view->presentInvites();?>
 	</div>
 </div>
 <?php echo Format::footer(); ?>
