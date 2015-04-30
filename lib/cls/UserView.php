@@ -247,29 +247,41 @@ HTML;
 
     public function presentProjects()
     {
+        $html = '<div id="proj_list">';
+        $html .= '<h2>Projects</h2>';
+
         $proj = new Project($this->site);
         $projects = $proj->getProject($this->user->getUserID());
 
-        $collab = new Invitation($this->site);
-        $collabs = $collab->getProjForCollab($this->user->getUserID());
-
-        if($collabs !== false && !empty($collabs)) {
-            foreach($collabs as $item) {
-
-            }
-        }
-
         if($projects !== false && !empty($projects)) {
-            $html = '<div id="proj_list">';
-            $html .= '<h2>Projects</h2>';
             foreach($projects as $item) {
                 $projid = $item['projID'];
                 $ownerID = $item['ownerID'];
                 $title = $item['title'];
                 $html .= '<p><a href="project.php?proj='.$projid.'&ownid='.$ownerID.'">'.$title.'</a></p>';
             }
-            $html .= '</div>';
+        }
 
+        $collab = new Invitation($this->site);
+        $collabs = $collab->getFullProjForCollab($this->user->getUserID());
+
+        if($collabs !== false && !empty($collabs)) {
+            foreach($collabs as $item) {
+                $projid = $item['projID'];
+                $ownerID = $item['ownerID'];
+                $proj_title = $proj->getProjTitle($ownerID, $projid);
+
+                if($proj_title !== false) {
+                    $html .= '<p><a href="project.php?proj='.$projid.'&ownid='.$ownerID.'">'.$proj_title.'</a></p>';
+                }
+            }
+        }
+
+        $html .= '</div>';
+
+        // This if statement is needed so it only returns if
+        // There is at least one project to return.
+        if(($projects !== false && !empty($projects)) || ($collabs !== false && !empty($collabs))) {
             return $html;
         }
 

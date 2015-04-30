@@ -167,6 +167,38 @@ SQL;
         return $result;
     }
 
+    /**
+     * @param $userid
+     * @return array|bool, This will return false if there is
+     * an error or no rows. Otherwise this will return an array
+     * of ownerID and projID of a project for a collaborator
+     */
+    public function getFullProjForCollab($userid) {
+        $sql=<<<SQL
+SELECT projID, ownerID FROM $this->tableName
+WHERE collaboratorID=? AND status=?
+SQL;
+        try {
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+            $statement->execute(array($userid, 'accepted'));
+        }
+        catch(Exception $e) {
+            return false;
+        }
+
+        if($statement->rowCount() === 0) {
+            return false;
+        }
+
+        $result = array();  // Empty initial array
+        foreach($statement as $row) {
+            $result[] = $row;
+        }
+
+        return $result;
+    }
+
     public function getRejected($ownerid)
     {
         $sql = <<<SQL

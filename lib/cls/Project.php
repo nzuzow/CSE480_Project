@@ -105,5 +105,34 @@ SQL;
         return false;
     }
 
+    public function getProjTitleByID($projid) {
+        $sql=<<<SQL
+SELECT title FROM $this->tableName
+WHERE projID = ?
+SQL;
+        try {
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute(array($projid));
+        }
+        catch(Exception $e) {
+            return false;
+        }
+
+        if($statement->rowCount() === 0) {
+            return false;
+        }
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if(!empty($row)) {
+            return $row['title'];
+        }
+
+        return false;
+
+    }
+
 
 }
