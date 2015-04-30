@@ -113,7 +113,7 @@ SQL;
 
     }
 
-    public function acceptInvite($userid, $projid) {
+    public function updateInvite($status, $userid, $projid) {
         $sql=<<<SQL
 UPDATE $this->tableName
 SET status=?
@@ -123,7 +123,7 @@ SQL;
         $pdo = $this->pdo();
         $statement = $pdo->prepare($sql);
 
-        $statement->execute(array('accepted',$userid, $projid));
+        $statement->execute(array($status,$userid, $projid));
 
 
     }
@@ -141,7 +141,6 @@ SQL;
 
     }
 
-
     public function getProjForCollab($userid) {
         $sql=<<<SQL
 SELECT projID FROM $this->tableName
@@ -150,7 +149,6 @@ SQL;
         try {
             $pdo = $this->pdo();
             $statement = $pdo->prepare($sql);
-
             $statement->execute(array($userid, 'accepted'));
         }
         catch(Exception $e) {
@@ -169,5 +167,34 @@ SQL;
         return $result;
     }
 
+    public function getRejected($ownerid)
+    {
+        $sql = <<<SQL
+SELECT *
+FROM $this->tableName
+WHERE ownerID=? AND status=?
+SQL;
+
+        try {
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute(array($ownerid, 'rejected'));
+        }
+        catch (Exception $e) {
+            return false;
+        }
+
+        if ($statement->rowCount() === 0) {
+            return false;
+        }
+
+        $result = array();  // Empty initial array
+        foreach ($statement as $row) {
+            $result[] = $row;
+        }
+
+        return $result;
+    }
 }
 

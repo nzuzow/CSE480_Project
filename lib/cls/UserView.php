@@ -295,6 +295,27 @@ HTML;
         }
     }
 
+    public function presentRejected() {
+        $userid = $_SESSION['user']->getUserID();
+        $invitation = new Invitation($this->site);
+        $rejects = $invitation->getRejected($userid);
+        if(!empty($rejects)) {
+            $htmlUsers = '';
+            foreach($rejects as $item) {
+                $rejector = $item['collaboratorID'];
+                $projid = $item['projID'];
+                $url = "post/invite-post.php?i=" . $rejector . "&proj=" . $projid . "&s=r";
+                $htmlUsers .= '<p>User: '. $rejector. ' - Project: '. $projid .' - <a href="' . $url . '">Delete</a></p>';
+            }
+            return <<<HTML
+<div id="reject_list">
+<h2>Rejected Project Invites</h2>
+$htmlUsers
+</div>
+HTML;
+        }
+    }
+
     private $user;
     private $site;
     private $users;
