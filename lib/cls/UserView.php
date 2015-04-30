@@ -250,6 +250,15 @@ HTML;
         $proj = new Project($this->site);
         $projects = $proj->getProject($this->user->getUserID());
 
+        $collab = new Invitation($this->site);
+        $collabs = $collab->getProjForCollab($this->user->getUserID());
+
+        if($collabs !== false && !empty($collabs)) {
+            foreach($collabs as $item) {
+
+            }
+        }
+
         if($projects !== false && !empty($projects)) {
             $html = '<div id="proj_list">';
             $html .= '<h2>Projects</h2>';

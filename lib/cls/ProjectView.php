@@ -102,9 +102,16 @@ HTML;
         $users = new Users($this->site);
         $collabs = $this->invitation->getCollaborators($this->projid);
         $collabsStr = '';
-        foreach($collabs as $collab) {
-            $collabsStr .= $collab . ",";
+
+        // This check is needed, because if there are no collaborators,
+        // The getCollaborators will return false, and that will cause
+        // an error if this check isn't here.
+        if(!empty($collabs) && $collabs != false) {
+            foreach ($collabs as $collab) {
+                $collabsStr .= $collab . ",";
+            }
         }
+
         $nonCollabs = $users->getNonCollabs($this->ownerid, $collabsStr);
         $htmlUsers = '';
         if (!empty($nonCollabs)) {
