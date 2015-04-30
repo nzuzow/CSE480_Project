@@ -141,17 +141,15 @@ SQL;
 
     }
 
-    public function getRejected($ownerid) {
-        $sql =<<<SQL
-SELECT *
-FROM $this->tableName
-WHERE ownerID=? AND status=?
+    public function getProjForCollab($userid) {
+        $sql=<<<SQL
+SELECT projID FROM $this->tableName
+WHERE collaboratorID=? AND status=?
 SQL;
         try {
             $pdo = $this->pdo();
             $statement = $pdo->prepare($sql);
-
-            $statement->execute(array($ownerid, 'rejected'));
+            $statement->execute(array($userid, 'accepted'));
         }
         catch(Exception $e) {
             return false;
@@ -163,11 +161,40 @@ SQL;
 
         $result = array();  // Empty initial array
         foreach($statement as $row) {
-            $result[] = $row;
+            $result[] = $row['projID'];
         }
 
         return $result;
     }
 
+    public function getRejected($ownerid)
+    {
+        $sql = <<<SQL
+SELECT *
+FROM $this->tableName
+WHERE ownerID=? AND status=?
+SQL;
+
+        try {
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute(array($ownerid, 'rejected'));
+        }
+        catch (Exception $e) {
+            return false;
+        }
+
+        if ($statement->rowCount() === 0) {
+            return false;
+        }
+
+        $result = array();  // Empty initial array
+        foreach ($statement as $row) {
+            $result[] = $row;
+        }
+
+        return $result;
+    }
 }
 
