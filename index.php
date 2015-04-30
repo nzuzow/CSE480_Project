@@ -40,6 +40,7 @@ $name = $view->getName();
 			<?php echo $view->presentProjects();?>
 			<?php echo $view->presentPending();?>
 			<?php echo $view->presentInvites();?>
+			<?php echo $view->presentRejected();?>
 	</div>
 </div>
 <?php echo Format::footer(); ?>
