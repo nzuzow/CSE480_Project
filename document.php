@@ -13,12 +13,31 @@ $file_contents = "";
 $version_num = "";
 $p_docid = "";
 
+
+$invitation = new Invitation($site);
+$loggedUser = $_SESSION['user']->getUserID();
+$collabProjs = $invitation->getProjForCollab($loggedUser);
+if(!($loggedUser == $_GET['proj_ownerid'])) {
+    if(!$collabProjs)
+    {
+        header("location: $root");
+        exit;
+    }
+    if(in_array($_GET['proj_id'], $collabProjs)) {
+        header("location: $root");
+        exit;
+    }
+}
+
+
 $fileNameTest = str_replace(" ", "", $_GET['doc_title']);
 if(!$fileNameTest)  {
     $url = $root . "/project.php?proj=" . $_GET['proj_id'] . "&ownid=" . $_GET['proj_ownerid'];
     header("location: $url");
     exit;
 }
+
+
 
 if(isset($_GET['doc_status']) && $_GET['doc_status'] == "new") {
     // This is a new document

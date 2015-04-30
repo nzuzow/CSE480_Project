@@ -14,6 +14,21 @@ if(isset($_GET['proj']) && isset($_GET['ownid'])) {
 $projView = new ProjectView($site, $ownerid, $projid);
 $title = $projView->getTitle();
 
+$invitation = new Invitation($site);
+$loggedUser = $_SESSION['user']->getUserID();
+$collabProjs = $invitation->getProjForCollab($loggedUser);
+    if (!($loggedUser == $ownerid)) {
+        if(!$collabProjs)
+        {
+            header("location: $root");
+            exit;
+        }
+        elseif (in_array($projid, $collabProjs)) {
+            header("location: $root");
+            exit;
+        }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
