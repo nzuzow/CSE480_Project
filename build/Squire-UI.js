@@ -1,6 +1,8 @@
 /**
  * Created by nickzuzow on 4/25/15.
  */
+
+// Most of this came from an example piece of code provided by Squire.
 $(document).ready(function() {
     Squire.prototype.testPresenceinSelection = function(name, action, format,
                                                         validation) {

@@ -1,5 +1,5 @@
 /* Copyright © 2011-2013 by Neil Jenkins. MIT Licensed. */
-
+// This is part of the library called Squire.
 ( function ( doc, undefined ) {
 
 "use strict";
