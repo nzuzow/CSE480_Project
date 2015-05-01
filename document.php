@@ -13,6 +13,7 @@ $file_contents = "";
 $version_num = "";
 $p_docid = "";
 
+$doc_view = new DocumentView($site);
 
 $invitation = new Invitation($site);
 $loggedUser = $_SESSION['user']->getUserID();
@@ -23,7 +24,7 @@ if(!($loggedUser == $_GET['proj_ownerid'])) {
         header("location: $root");
         exit;
     }
-    if(in_array($_GET['proj_id'], $collabProjs)) {
+    if(!in_array($_GET['proj_id'], $collabProjs)) {
         header("location: $root");
         exit;
     }
@@ -80,7 +81,6 @@ if(isset($_GET['doc_status']) && $_GET['doc_status'] == "old") {
     $curr_parent_docid = $old_p_docid;
     $curr_vnum = $version_num;
 
-    $doc_view = new DocumentView($site);
     $doc_tree = $doc_view->getDocumentTree($curr_docid, $curr_parent_docid, $curr_vnum, $filename);
 }
 ?>
@@ -103,12 +103,14 @@ if(isset($_GET['doc_status']) && $_GET['doc_status'] == "old") {
 </head>
 <body>
 <?php echo Format::header($filename); ?>
-<div class = "main">
+<div id="doc_main" class = "main">
     <div class="left_sidebar">
         <?php
         if($doc_status == "old") {
         echo $doc_tree;
         }
+
+        echo $doc_view->displayAddComment();
         ?>
     </div>
 

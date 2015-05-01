@@ -70,6 +70,16 @@ class DocumentView {
         $html .= "</div>";
         return $html;
     }
+
+    public function displayAddComment() {
+        $html = "<div class='comment_contain'>";
+        $html .= "<textarea id='comment_text'></textarea>";
+        $html .= "<button id='comment_submit' value='Submit'></button>";
+        $html .="</div>";
+
+        return $html;
+    }
+
     private $site;
     private $document;
 }

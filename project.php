@@ -23,7 +23,7 @@ $collabProjs = $invitation->getProjForCollab($loggedUser);
             header("location: $root");
             exit;
         }
-        elseif (in_array($projid, $collabProjs)) {
+        elseif (!in_array($projid, $collabProjs)) {
             header("location: $root");
             exit;
         }
