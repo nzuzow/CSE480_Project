@@ -48,7 +48,7 @@ class DocumentView {
         $padding = 5;
 
         $html = "<div class='tree_view'>";
-        $html .= "<h2>Document Tree</h2>";
+        $html .= "<h2 class='doc_heading'>Document Tree</h2>";
         $depth = 0;
         foreach($doc_tree as $key => $val) {
             // If depth is 0 then add both the key and the value. Otherwise
@@ -73,8 +73,9 @@ class DocumentView {
 
     public function displayAddComment() {
         $html = "<div class='comment_contain'>";
+        $html .= "<h2 class='doc_heading'>Add a Comment</h2>";
         $html .= "<textarea id='comment_text'></textarea>";
-        $html .= "<button id='comment_submit' value='Submit'></button>";
+        $html .= "<div id='b_contain'><button type='button' id='comment_submit' value='add_comment'>Add</button></div>";
         $html .="</div>";
 
         return $html;

@@ -471,6 +471,11 @@ div#update {
     display: inline-block;
     vertical-align: top;
 }
+
+.doc_heading {
+    margin-left: 3px;
+}
+
 .tree_view {
     width: 220px;
     margin:0.5em auto 0.5em auto;
@@ -479,12 +484,27 @@ div#update {
 }
 .comment_contain {
     width: 220px;
+    margin: 0 auto 0.5em auto;
     border-radius: 0.3em;
     border: 1px solid #919191;
 }
-.comment_contain #comment_text {
-    max-width: 218px;
+/*#text_contain {
+    width: 218px;
+    margin-left: auto;
+    margin-right: auto;
+}*/
+
+#comment_text {
+    display: block;
+    min-width: 190px;
+    max-width: 215px;
+    min-height: 70px;
     max-height: 180px;
     margin-left: auto;
     margin-right: auto;
+}
+
+#b_contain {
+    margin-top: 0.25em;
+    text-align: center;
 }
