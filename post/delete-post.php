@@ -24,5 +24,18 @@ if(isset($_GET['docid'])) {
     }
 
 }
+if(isset($_GET['projid'])) {
+    $projid = $_GET['projid'];
+    $project = new Project($site);
+
+    $proj = $project->getProjectByID($projid);
+    if($proj) {
+        if($proj['ownerID'] == $_SESSION['user']->getUserID()) {
+            $project->deleteProj($projid);
+        }
+
+    }
+
+}
 header("location: $root");
 exit;

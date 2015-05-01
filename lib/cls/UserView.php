@@ -309,7 +309,11 @@ HTML;
                 $projid = $item['projID'];
                 $ownerID = $item['ownerID'];
                 $title = $item['title'];
-                $html .= '<p><a href="project.php?proj='.$projid.'&ownid='.$ownerID.'">'.$title.'</a></p>';
+                $delete = '';
+                if($ownerID == $_SESSION['user']->getUserID()) {
+                    $delete = '<a href="post/delete-post.php?projid='. $projid . '">Delete</a>';
+                }
+                $html .= '<p><a href="project.php?proj='.$projid.'&ownid='.$ownerID.'">'.$title.'</a> - ' . $delete . '</p>';
             }
         }
 

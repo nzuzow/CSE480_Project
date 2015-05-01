@@ -134,6 +134,49 @@ SQL;
 
     }
 
+    public function getProjectByID($projID) {
+        $sql=<<<SQL
+SELECT *
+FROM $this->tableName
+WHERE projID = ?
+SQL;
+        try {
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute(array($projID));
+        }
+        catch(Exception $e) {
+            return false;
+        }
+
+        if($statement->rowCount() === 0) {
+            return false;
+        }
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if(!empty($row)) {
+            return $row;
+        }
+
+        return false;
+    }
+
+    public function deleteProj($projid) {
+        $sql=<<<SQL
+DELETE FROM $this->tableName
+WHERE projID=?
+SQL;
+
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+
+        $statement->execute(array($projid));
+
+
+    }
+
 
 
 }
