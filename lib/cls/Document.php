@@ -118,7 +118,17 @@ SQL;
         return false;
     }
 
-    public function getOwner($projid) {
+    public function deleteDoc($docid) {
+        $sql=<<<SQL
+DELETE FROM $this->tableName
+WHERE docID=?
+SQL;
+
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+
+        $statement->execute(array($docid));
+
 
     }
 
