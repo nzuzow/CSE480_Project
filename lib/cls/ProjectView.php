@@ -87,7 +87,12 @@ HTML;
                 $ownerID = $item['projOwnerID'];
                 $title = $item['fileName'];
                 $version = $item['versionNo'];
-                $html .= '<p><a href="document.php?doc_status=old&doc_title='.$title.'&proj_ownerid='.$ownerID.'&proj_id='.$projid.'&p_docid='.$docid.'">'.$title.' - version '.$version.'</a></p>';
+                $creator = $item['creatorID'];
+                $delete = '';
+                if($creator == $_SESSION['user']->getUserID()) {
+                    $delete = '<a href="post/delete.post.php?docid='. $docid . '">Delete</a>';
+                }
+                $html .= '<p><a href="document.php?doc_status=old&doc_title='.$title.'&proj_ownerid='.$ownerID.'&proj_id='.$projid.'&p_docid='.$docid.'">'.$title.' - version '.$version.'</a> - ' . $delete . '</p>';
                 //$html .= '<p><a href="project.php?proj='.$projid.'&ownid='.$ownerID.'">'.$title.'</a></p>';
             }
             $html .= '</div>';

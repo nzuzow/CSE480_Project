@@ -449,6 +449,10 @@ div#update {
     display: inline-block;
 }
 
+#doc_list {
+    width: 16em;
+}
+
 /*Document Page*/
 .left_sidebar {
     font-family: "Arial", Arial, sans-serif;

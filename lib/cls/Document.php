@@ -118,4 +118,8 @@ SQL;
         return false;
     }
 
+    public function getOwner($projid) {
+
+    }
+
 }
