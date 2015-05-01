@@ -9,7 +9,6 @@ if(isset($_GET['r'])) {
 
 $view = new UserView($site, $user, $_REQUEST);
 $name = $view->getName();
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,7 +25,7 @@ $name = $view->getName();
     <?php echo $view->presentProfile(); ?>
 </div>
     <?php echo $view->presentUpdate(); ?>
-    <?php echo $view->presentFriends(); ?>
+
     <?php
     if(isset($_SESSION['update-error'])) {
         echo "<p>" . $_SESSION['update-error'] . "</p>";
