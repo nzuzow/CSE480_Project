@@ -61,9 +61,10 @@ HTML;
         else {
             $user = $loggedUser;
         }
-
+        $profile = $this->displayProfile($user) . $this->presentFriends();
         $priv = $this->users->checkPrivacy($user);
         if($priv == "low" || $loggedUser == $user) {
+            return $profile;
         }
         elseif($priv == 'medium') {
             $invitations = new Invitation($this->site);
@@ -80,7 +81,7 @@ HTML;
                     }
                 }
                 if ($collaborators == true) {
-                    return $this->displayProfile($user);
+                    return $profile;
                 }
             }
             else {
@@ -110,7 +111,7 @@ HTML;
             $friendship = new Friendship($this->site);
             if($friendship->checkFriend($user, $loggedUser))
             {
-                return $this->displayProfile($user);
+                return $profile;
             }
         }
     }
@@ -136,6 +137,8 @@ HTML;
             }
 
         }
+        $view = $this->presentFriends();
+
         return <<<HTML
 
 <p>$userID</p>
@@ -272,7 +275,10 @@ HTML;
         }
         $html .= '</div>';
 
-        return $html;
+        return <<<HTML
+$html;
+HTML;
+
     }
 
     public function presentPending()
