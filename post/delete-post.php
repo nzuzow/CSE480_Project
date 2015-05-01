@@ -14,12 +14,15 @@ if(isset($_GET['docid'])) {
 
     $doc = $document->getDocumentById($docid);
     if($doc) {
-        if($doc['creatorID'] == $_SESSION['user']->getUserID) {
+        if($doc['creatorID'] == $_SESSION['user']->getUserID()) {
             $document->deleteDoc($docid);
-            $url = "../project.php?proj=" . $doc['projID'];
+            $url = "../project.php?proj=" . $doc['projID'] . "&ownid=". $doc['projOwnerID'];
             header("location: $url");
             exit;
         }
+
     }
+
 }
 header("location: $root");
+exit;
