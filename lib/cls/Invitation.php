@@ -237,7 +237,7 @@ SQL;
         try {
             $pdo = $this->pdo();
             $statement = $pdo->prepare($sql);
-            $statement->execute(array($userid, 'accepted'));
+            $statement->execute(array($user, 'accepted'));
         }
         catch(Exception $e) {
             return false;
@@ -249,7 +249,7 @@ SQL;
 
         $result = array();  // Empty initial array
         foreach($statement as $row) {
-            $result[] = $row;
+            $result[] = $row['projID'];
         }
 
         return $result;
