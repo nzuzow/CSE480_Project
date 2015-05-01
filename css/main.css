@@ -508,3 +508,36 @@ div#update {
     margin-top: 0.25em;
     text-align: center;
 }
+
+.comm_contain {
+    width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5em;
+    border-radius: 0.3em;
+    border: 1px solid #919191;
+}
+
+.comm_id {
+    margin-bottom:0;
+    padding-bottom:0px;
+    margin-left: 0.5em;
+
+}
+
+.comm_contain > hr {
+    width: 95%;
+}
+.comm_time {
+    margin-left: 0.5em;
+    font-size: 10px;
+    color: #a1a1a1;
+    margin-top:0;
+    padding-top:0;
+    margin-bottom:0;
+}
+
+.comm_message {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}

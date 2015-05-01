@@ -15,6 +15,8 @@ $p_docid = "";
 
 $doc_view = new DocumentView($site);
 
+$comment_view = new CommentView($site);
+
 $invitation = new Invitation($site);
 $loggedUser = $_SESSION['user']->getUserID();
 $collabProjs = $invitation->getProjForCollab($loggedUser);
@@ -98,6 +100,46 @@ if(isset($_GET['doc_status']) && $_GET['doc_status'] == "old") {
     <script>
         $(document).ready(function() {
             new SquireUI({replace: 'textarea#text_input', height: 550});
+
+            $("#comment_submit").click(function(event){
+                event.preventDefault();
+
+                var comm = $("#comment_text");
+                var commentText = comm.val();
+
+                if(commentText != false) {
+                    var docID = $("#p_docid").val();
+                    var data = {
+                        text: commentText,
+                        docID: docID
+                    };
+
+                    $.ajax({
+                        url: "post/comment-post.php",
+                        data: data,
+                        method: "POST",
+                        success: function(data) {
+                            comm.val('');
+                            //alert("This was successful. The response was: "+data);
+                            var comments = $("#comments_contain");
+
+                            var currComments = comments.html();
+
+                            currComments += data;
+
+                            comments.html(currComments);
+
+                        },
+                        error: function(xhr, status, error) {
+                            alert("There was an error saving this document");
+                            return false;
+                        }
+
+                    });
+
+
+                }
+            });
         });
     </script>
 </head>
@@ -112,6 +154,12 @@ if(isset($_GET['doc_status']) && $_GET['doc_status'] == "old") {
 
         echo $doc_view->displayAddComment();
         ?>
+        <div id="comments_contain" class='comments_contain'>
+            <h2 class='doc_heading'>Comments</h2>
+        <?php
+        echo $comment_view->displayComments($curr_docid);
+        ?>
+        </div>
     </div>
 
     <div class="document_contain">
