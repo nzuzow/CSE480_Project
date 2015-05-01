@@ -228,5 +228,31 @@ SQL;
 
         return $result;
     }
+
+    public function getProjForOwner($user) {
+        $sql=<<<SQL
+SELECT DISTINCT projID, ownerID FROM $this->tableName
+WHERE ownerID=? AND status=?
+SQL;
+        try {
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+            $statement->execute(array($userid, 'accepted'));
+        }
+        catch(Exception $e) {
+            return false;
+        }
+
+        if($statement->rowCount() === 0) {
+            return false;
+        }
+
+        $result = array();  // Empty initial array
+        foreach($statement as $row) {
+            $result[] = $row;
+        }
+
+        return $result;
+    }
 }
 

@@ -70,6 +70,9 @@ HTML;
             $invitations = new Invitation($this->site);
             $user1projs = $invitations->getProjForCollab($user);
             $user2projs = $invitations->getProjForCollab($loggedUser);
+            $user1owns = $invitations->getProjForOwner($user);
+            $user2owns = $invitations->getProjForOwner($loggedUser);
+
             $collaborators = false;
             if (!empty($user1projs) && !empty($user2projs)) {
                 foreach ($user1projs as $item1) {
@@ -80,10 +83,31 @@ HTML;
                         }
                     }
                 }
-                if ($collaborators == true) {
-                    return $profile;
+            }
+            if (!empty($user1projs) && !empty($user2owns)) {
+                foreach ($user1projs as $item1) {
+                    foreach ($user2owns as $item2) {
+                        if ($item1 == $item2) {
+                            $collaborators = true;
+                            break;
+                        }
+                    }
                 }
             }
+            if (!empty($user1owns) && !empty($user2projs)) {
+                foreach ($user1owns as $item1) {
+                    foreach ($user2projs as $item2) {
+                        if ($item1 == $item2) {
+                            $collaborators = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if ($collaborators == true) {
+                    return $profile;
+                }
+
             else {
                 $userID = "Login ID: " . $user;
                 $user_interests = new UserInterests($this->site);
